@@ -1,13 +1,15 @@
-![alt text](./img/logo.png "CalPose")
+![alt text](./img/logo.png "CalPose Logo")
 
 Calpose is a lightweight, easy-to-use Calendar renderer/widget for Android/Jetpack Compose.
 
 ## Renderer? 
 The goal of Calpose is to avoid imposing rules or limitations in regards to the styling of the calendar. We want you to have full control
-over the UI aspect using Composable widgets to your liking, while Calpose only deals with the actual Calendar related instrinsics. In other
-words, Calpose will act as a renderer for your widgets based on the Calendar.
+over the UI aspects using Composable widgets while Calpose deals with the Calendar instrinsics. In other words, Calpose will act as a 
+renderer for your widgets based on the Calendar.
 
 ## Features
+![alt text](./img/calpose.gif "Default Widgets")
+
 * TBD
 
 ## Usage
