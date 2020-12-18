@@ -9,9 +9,12 @@ over the UI aspects using Composable widgets while Calpose deals with the Calend
 renderer for your widgets based on the Calendar.
 
 ## Features
+### Default Widgets
 ![](./img/calpose.gif "Default Widgets")
+[DefaultPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/DefaultPreview.kt "Default widget example")
 
-* TBD
+![](./img/calpose_material.gif "Material Widgets with selection")
+[MaterialPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/MaterialPreview.kt "Material widget example")
 
 ## Installation
 Add Jitpack to your project build.gradle
@@ -42,7 +45,11 @@ dependencies {
 }
 ```
 ## Usage
-* TBD
+* WIP
+
+Currently consult the [DefaultPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/DefaultPreview.kt "Default widget example")
+& [MaterialPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/MaterialPreview.kt "Material widget example")
+examples to get a good idea of how to render a calendar.
 
 ## License
 MIT License

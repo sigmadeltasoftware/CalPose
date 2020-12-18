@@ -3,14 +3,12 @@ package be.sigmadelta.calpose
 import android.icu.util.Calendar
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.gesture.DragObserver
 import androidx.compose.ui.gesture.dragGestureFilter
-import androidx.compose.ui.unit.dp
 import be.sigmadelta.calpose.model.CalposeActions
 import be.sigmadelta.calpose.model.CalposeDate
 import be.sigmadelta.calpose.model.CalposeProperties
@@ -31,7 +29,8 @@ fun Calpose(
     widgets: CalposeWidgets,
     properties: CalposeProperties = CalposeProperties()
 ) {
-    val month = monthFlow.collectAsState().value
+    val month by monthFlow.collectAsState()
+
     val todayMonth = YearMonth.now()
 
     Crossfade(
@@ -52,7 +51,7 @@ fun Calpose(
                 })
             ) {
                 CalposeHeader(it, todayMonth, actions, widgets)
-                CalposeMonth(it, todayMonth, widgets)
+                CalposeMonth(it, todayMonth, actions, widgets)
             }
         }
 
@@ -73,16 +72,8 @@ fun CalposeHeader(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             widgets.header(month, todayMonth, actions)
-
-            Row(
-                modifier = Modifier.fillMaxWidth(1f).padding(bottom = 16.dp),
-            ) {
-                DayOfWeek.values().forEach {
-                    widgets.headerDay(this, it)
-                }
-            }
+            widgets.headerDayRow(DayOfWeek.values().toSet())
         }
     }
 
@@ -90,7 +81,7 @@ fun CalposeHeader(
 }
 
 @Composable
-fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, widgets: CalposeWidgets) {
+fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, actions: CalposeActions, widgets: CalposeWidgets) {
 
     val firstDayOffset = month.atDay(1).dayOfWeek.ordinal
     val monthLength = month.lengthOfMonth()
@@ -109,7 +100,8 @@ fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, widgets: CalposeWidget
             today = today,
             month = month,
             todayMonth = todayMonth,
-            widgets = widgets
+            widgets = widgets,
+            actions = actions
         )
     }
 }
@@ -124,7 +116,8 @@ fun CalposeWeek(
     today: Int,
     month: YearMonth,
     todayMonth: YearMonth,
-    widgets: CalposeWidgets
+    widgets: CalposeWidgets,
+    actions: CalposeActions
 ) {
     Row {
         if (monthWeekNumber == 0) {
@@ -147,7 +140,8 @@ fun CalposeWeek(
             widgets.day(
                 this,
                 CalposeDate(day, month),
-                CalposeDate(today, todayMonth)
+                CalposeDate(today, todayMonth),
+                actions
             )
         }
 

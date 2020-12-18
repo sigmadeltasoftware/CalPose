@@ -1,0 +1,129 @@
+package be.sigmadelta.calpose
+
+import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawOpacity
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.ui.tooling.preview.Preview
+import be.sigmadelta.calpose.model.CalposeActions
+import be.sigmadelta.calpose.model.CalposeDate
+import be.sigmadelta.calpose.model.CalposeWidgets
+import be.sigmadelta.calpose.util.lightGrey
+import be.sigmadelta.calpose.util.primaryAccent
+import be.sigmadelta.calpose.widgets.DefaultDay
+import be.sigmadelta.calpose.widgets.MaterialHeader
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import java.time.YearMonth
+
+@ExperimentalCoroutinesApi
+@Preview
+@Composable
+fun MaterialPreview() {
+
+    val monthFlow = MutableStateFlow(YearMonth.now())
+    val selectionSet = MutableStateFlow(setOf<CalposeDate>())
+
+    MaterialCalendar(monthFlow, selectionSet)
+}
+
+@ExperimentalCoroutinesApi
+@Composable
+fun MaterialCalendar(
+    monthFlow: MutableStateFlow<YearMonth>,
+    selectionSet: MutableStateFlow<Set<CalposeDate>>
+) {
+    val selections = selectionSet.collectAsState().value
+
+    Column {
+        Calpose(
+            monthFlow = monthFlow,
+
+            actions = CalposeActions(
+                onClickedPreviousMonth = { monthFlow.value = monthFlow.value.minusMonths(1) },
+                onClickedNextMonth = { monthFlow.value = monthFlow.value.plusMonths(1) },
+            ),
+
+            widgets = CalposeWidgets(
+                header = { month, todayMonth, actions ->
+                    MaterialHeader(month, todayMonth, actions, Color(primaryAccent))
+                },
+                headerDayRow = { headerDayList ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(1f)
+                            .padding(vertical = 8.dp),
+                    ) {
+                        headerDayList.forEach {
+                            DefaultDay(
+                                text = it.name.first().toString(),
+                                modifier = Modifier.weight(WEIGHT_7DAY_WEEK).drawOpacity(.6f),
+                                style = TextStyle(color = Color.Gray, fontWeight = FontWeight.Bold)
+                            )
+                        }
+                    }
+                },
+                day = { day, today, actions ->
+                    val isSelected = selections.contains(day)
+                    val onSelected = {
+                        selectionSet.value = mutableSetOf(day).apply {
+                            addAll(selectionSet.value)
+                        }
+                    }
+                    val weight = if (isSelected) 1f else WEIGHT_7DAY_WEEK
+                    val bgColor = if (isSelected) Color(primaryAccent) else Color.Transparent
+
+                    val widget: @Composable () -> Unit = {
+                        DefaultDay(
+                            text = day.day.toString(),
+                            modifier = Modifier.padding(4.dp).weight(weight).fillMaxWidth(),
+                            style = TextStyle(
+                                color = when {
+                                    isSelected -> Color.White
+                                    else -> Color.Black
+                                },
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                            )
+                        )
+                    }
+
+                    Column(
+                        modifier = Modifier.weight(WEIGHT_7DAY_WEEK),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+
+                        Crossfade(current = bgColor) {
+                            Box(
+                                modifier = Modifier.preferredSize(28.dp).clip(CircleShape)
+                                    .clickable(onClick = onSelected, indication = null)
+                                    .background(it)
+                            ) {
+                                widget()
+                            }
+                        }
+
+                    }
+                },
+                priorMonthDay = { day ->
+                    DefaultDay(
+                        text = day,
+                        style = TextStyle(color = Color(lightGrey)),
+                        modifier = Modifier.padding(4.dp).fillMaxWidth().weight(WEIGHT_7DAY_WEEK)
+                    )
+                },
+            )
+        )
+    }
+}

@@ -26,7 +26,7 @@ import java.time.YearMonth
 @ExperimentalCoroutinesApi
 @Preview
 @Composable
-fun defaultPreview() {
+fun DefaultPreview() {
 
     val monthFlow = MutableStateFlow(YearMonth.now())
 
@@ -42,14 +42,20 @@ fun defaultPreview() {
             header = { month, todayMonth, actions ->
                 DefaultHeader(month, todayMonth, actions)
             },
-            headerDay = { dayOfWeek ->
-                DefaultDay(
-                    text = dayOfWeek.name.first().toString(),
-                    modifier = Modifier.weight(WEIGHT_7DAY_WEEK),
-                    style = TextStyle(color = Color.Gray)
-                )
+            headerDayRow = { headerDayList ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(1f).padding(bottom = 16.dp),
+                ) {
+                    headerDayList.forEach {
+                        DefaultDay(
+                            text = it.name.first().toString(),
+                            modifier = Modifier.weight(WEIGHT_7DAY_WEEK),
+                            style = TextStyle(color = Color.Gray)
+                        )
+                    }
+                }
             },
-            day = { day, today ->
+            day = { day, today, _ ->
                 val isToday = day == today
                 val dayHasPassed = day.day < today.day
                 val isCurrentMonth = day.month == today.month
