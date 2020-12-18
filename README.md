@@ -1,4 +1,5 @@
-![alt text](./img/logo.png "CalPose Logo")
+![](./img/logo.png "CalPose Logo")
+[![](https://jitpack.io/v/sigmadeltasoftware/CalPose.svg)](https://jitpack.io/#sigmadeltasoftware/CalPose)
 
 Calpose is a lightweight, easy-to-use Calendar renderer/widget for Android/Jetpack Compose.
 
@@ -8,10 +9,38 @@ over the UI aspects using Composable widgets while Calpose deals with the Calend
 renderer for your widgets based on the Calendar.
 
 ## Features
-![alt text](./img/calpose.gif "Default Widgets")
+![](./img/calpose.gif "Default Widgets")
 
 * TBD
 
+## Installation
+Add Jitpack to your project build.gradle
+```
+allprojects {
+    repositories {
+        ...
+        
+        // When using build.gradle
+        maven { url 'https://jitpack.io' } 
+        
+        // When using build.gradle.kts
+        maven {
+            setUrl("https://jitpack.io")
+        }
+    }
+}
+```
+
+Add the dependency to your module, see top for `${CURRENT_VERSION}`
+```
+dependencies {
+    // build.gradle
+    implementation 'com.github.sigmadeltasoftware:CalPose:${CURRENT_VERSION}'
+
+    // build.gradle.kts
+    implementation("com.github.sigmadeltasoftware:CalPose:${CURRENT_VERSION}")
+}
+```
 ## Usage
 * TBD
 
