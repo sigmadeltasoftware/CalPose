@@ -4,9 +4,6 @@ plugins {
     id("maven-publish")
 }
 
-val group = "com.github.sigmadeltasoftware"
-val version = CalposeProps.versionName
-
 android {
     compileSdkVersion(Versions.compileSdk)
     buildToolsVersion(Versions.buildTools)
