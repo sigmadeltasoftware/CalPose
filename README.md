@@ -10,11 +10,12 @@ renderer for your widgets based on the Calendar.
 
 ## Features
 ### Default Widgets
-![](./img/calpose.gif "Default Widgets")
 [DefaultPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/DefaultPreview.kt "Default widget example")
+![](./img/calpose.gif "Default Widgets")
 
-![](./img/calpose_material.gif "Material Widgets with selection")
+### Material
 [MaterialPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/MaterialPreview.kt "Material widget example")
+![](./img/calpose_material.gif "Material Widgets with selection")
 
 ## Installation
 Add Jitpack to your project build.gradle
@@ -45,7 +46,7 @@ dependencies {
 }
 ```
 ## Usage
-* WIP
+### Work in Progress!
 
 Currently consult the [DefaultPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/DefaultPreview.kt "Default widget example")
 & [MaterialPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/MaterialPreview.kt "Material widget example")
