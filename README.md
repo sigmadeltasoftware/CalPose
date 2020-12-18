@@ -5,17 +5,17 @@ Calpose is a lightweight, easy-to-use Calendar renderer/widget for Android/Jetpa
 
 ## Renderer? 
 The goal of Calpose is to avoid imposing rules or limitations in regards to the styling of the calendar. We want you to have full control
-over the UI aspects using Composable widgets while Calpose deals with the Calendar instrinsics. In other words, Calpose will act as a 
+over the UI aspects using Composable widgets while Calpose deals with the Calendar intrinsics. In other words, Calpose will act as a 
 renderer for your widgets based on the Calendar.
 
 ## Features
 ### Default Widgets
-[DefaultPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/DefaultPreview.kt "Default widget example")
 ![](./img/calpose.gif "Default Widgets")
+[DefaultPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/DefaultPreview.kt "Default widget example")
 
 ### Material
-[MaterialPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/MaterialPreview.kt "Material widget example")
 ![](./img/calpose_material.gif "Material Widgets with selection")
+[MaterialPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/MaterialPreview.kt "Material widget example")
 
 ## Installation
 Add Jitpack to your project build.gradle

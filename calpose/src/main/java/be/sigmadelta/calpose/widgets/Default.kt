@@ -13,7 +13,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import be.sigmadelta.calpose.model.CalposeActions
@@ -32,7 +31,7 @@ fun DefaultHeader(
             onClick = { actions.onClickedPreviousMonth() },
             modifier = Modifier.padding(start = 16.dp)
         ) {
-            Icon(asset = vectorResource(id = R.drawable.ic_left))
+            Icon(imageVector = vectorResource(id = R.drawable.ic_left))
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -52,7 +51,7 @@ fun DefaultHeader(
             onClick = { actions.onClickedNextMonth() },
             modifier = Modifier.padding(end = 16.dp)
         ) {
-            Icon(asset = vectorResource(id = R.drawable.ic_right))
+            Icon(imageVector = vectorResource(id = R.drawable.ic_right))
         }
     }
 }
