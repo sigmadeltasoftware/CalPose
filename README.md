@@ -19,7 +19,7 @@ renderer for your widgets based on the Calendar.
 
 ## Installation
 Add Jitpack to your project build.gradle
-```
+```groovy
 allprojects {
     repositories {
         ...
@@ -36,7 +36,7 @@ allprojects {
 ```
 
 Add the dependency to your module, see top for `${CURRENT_VERSION}`
-```
+```groovy
 dependencies {
     // build.gradle
     implementation 'com.github.sigmadeltasoftware:CalPose:${CURRENT_VERSION}'
@@ -48,7 +48,7 @@ dependencies {
 ## Usage
 
 Using the Calpose Calender is pretty much as straightforward as using any Composeable widget:
-* 
+ 
 ```kotlin
 @Composable
 fun Calpose(
@@ -74,6 +74,7 @@ beneficial to your application: [CalposeActions.kt](https://github.com/sigmadelt
 should look like. Consult the dokka documentation of [CalposeWidgets](https://github.com/sigmadeltasoftware/CalPose/blob/master/calpose/src/main/java/be/sigmadelta/calpose/model/CalposeWidgets.kt "CalposeWidgets.kt") 
 to get a better idea of which widgets you can pass, and feel free to take a look at the examples below to get a better idea of how these can be used for scenario's where you want to have `clickable` days, etc...
 
+#### Properties
 There is also an optional component of `properties` which contains some properties for really fine-tuning your experience: 
 [CalposeProperties](https://github.com/sigmadeltasoftware/CalPose/blob/master/calpose/src/main/java/be/sigmadelta/calpose/model/CalposeProperties.kt "CalposeProperties.kt")
 
