@@ -19,7 +19,7 @@ renderer for your widgets based on the Calendar.
 
 ## Installation
 Add Jitpack to your project build.gradle
-```
+```groovy
 allprojects {
     repositories {
         ...
@@ -36,7 +36,7 @@ allprojects {
 ```
 
 Add the dependency to your module, see top for `${CURRENT_VERSION}`
-```
+```groovy
 dependencies {
     // build.gradle
     implementation 'com.github.sigmadeltasoftware:CalPose:${CURRENT_VERSION}'
@@ -46,11 +46,42 @@ dependencies {
 }
 ```
 ## Usage
-### Work in Progress!
 
-Currently consult the [DefaultPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/DefaultPreview.kt "Default widget example")
-& [MaterialPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/MaterialPreview.kt "Material widget example")
-examples to get a good idea of how to render a calendar.
+Using the Calpose Calender is pretty much as straightforward as using any Composeable widget:
+ 
+```kotlin
+@Composable
+fun Calpose(
+    monthFlow: StateFlow<YearMonth>,
+    actions: CalposeActions,
+    widgets: CalposeWidgets,
+    properties: CalposeProperties = CalposeProperties()
+)
+```
+
+There are 3 main components which have to be passed: 
+
+#### 1. StateFlow<YearMonth>
+Using a `StateFlow` of `java.time.YearMonth`, Calpose is able to determine the calendar structure and render accordingly. By manipulating this value (assigning a different `YearMonth`, you can choose which
+month should currently be displayed by Calpose.
+
+#### 2. Actions
+`CalposeActions` is a data class of actions which can be called upon by Calpose. Please consult the dokka documentation of `CalposeActions` (or our examples below) to get a better idea of which actions are 
+beneficial to your application: [CalposeActions.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/calpose/src/main/java/be/sigmadelta/calpose/model/CalposeActions.kt "CalposeActions.kt")  
+
+#### 3. Widgets
+`CalposeWidgets` is the most important component of Calpose, which will contain the definition of the composable widgets that will be rendered by Calpose. This is where you'll mainly define what your calendar
+should look like. Consult the dokka documentation of [CalposeWidgets](https://github.com/sigmadeltasoftware/CalPose/blob/master/calpose/src/main/java/be/sigmadelta/calpose/model/CalposeWidgets.kt "CalposeWidgets.kt") 
+to get a better idea of which widgets you can pass, and feel free to take a look at the examples below to get a better idea of how these can be used for scenario's where you want to have `clickable` days, etc...
+
+#### Properties
+There is also an optional component of `properties` which contains some properties for really fine-tuning your experience: 
+[CalposeProperties](https://github.com/sigmadeltasoftware/CalPose/blob/master/calpose/src/main/java/be/sigmadelta/calpose/model/CalposeProperties.kt "CalposeProperties.kt")
+
+## Examples
+[Default widget example](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/DefaultPreview.kt "Default widget example")
+
+[Material widget example with clickable days](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/MaterialPreview.kt "Material widget example")
 
 ## License
 MIT License
