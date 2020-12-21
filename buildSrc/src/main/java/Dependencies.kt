@@ -1,7 +1,7 @@
 object CalposeProps {
     const val applicationId = "be.sigmadelta.calpose"
-    const val versionCode = 4
-    const val versionName = "1.0.0"
+    const val versionCode = 5
+    const val versionName = "1.0.1"
     const val githubGroupId = "com.github.sigmadeltasoftware.calpose"
 }
 

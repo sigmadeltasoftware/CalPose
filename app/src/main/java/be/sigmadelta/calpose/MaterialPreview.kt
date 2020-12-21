@@ -1,5 +1,6 @@
 package be.sigmadelta.calpose
 
+import android.util.Log
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,6 +25,7 @@ import be.sigmadelta.calpose.widgets.DefaultDay
 import be.sigmadelta.calpose.widgets.MaterialHeader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import java.time.YearMonth
 
 @ExperimentalCoroutinesApi
@@ -73,10 +75,10 @@ fun MaterialCalendar(
                         }
                     }
                 },
-                day = { day, today, actions ->
-                    val isSelected = selections.contains(day)
+                day = { dayDate, todayDate ->
+                    val isSelected = selections.contains(dayDate)
                     val onSelected = {
-                        selectionSet.value = mutableSetOf(day).apply {
+                        selectionSet.value = mutableSetOf(dayDate).apply {
                             addAll(selectionSet.value)
                         }
                     }
@@ -85,7 +87,7 @@ fun MaterialCalendar(
 
                     val widget: @Composable () -> Unit = {
                         DefaultDay(
-                            text = day.day.toString(),
+                            text = dayDate.day.toString(),
                             modifier = Modifier.padding(4.dp).weight(weight).fillMaxWidth(),
                             style = TextStyle(
                                 color = when {
@@ -115,9 +117,9 @@ fun MaterialCalendar(
 
                     }
                 },
-                priorMonthDay = { day ->
+                priorMonthDay = { dayDate ->
                     DefaultDay(
-                        text = day,
+                        text = dayDate.day.toString(),
                         style = TextStyle(color = Color(lightGrey)),
                         modifier = Modifier.padding(4.dp).fillMaxWidth().weight(WEIGHT_7DAY_WEEK)
                     )

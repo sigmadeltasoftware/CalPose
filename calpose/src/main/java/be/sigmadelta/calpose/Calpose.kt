@@ -46,7 +46,7 @@ fun Calpose(
                 })
             ) {
                 CalposeHeader(it, todayMonth, actions, widgets)
-                CalposeMonth(it, todayMonth, actions, widgets)
+                CalposeMonth(it, todayMonth, widgets)
             }
         }
 
@@ -76,7 +76,7 @@ fun CalposeHeader(
 }
 
 @Composable
-fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, actions: CalposeActions, widgets: CalposeWidgets) {
+fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, widgets: CalposeWidgets) {
 
     val firstDayOffset = month.atDay(1).dayOfWeek.ordinal
     val monthLength = month.lengthOfMonth()
@@ -92,11 +92,13 @@ fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, actions: CalposeAction
             monthWeekNumber = i,
             weekCount = weekCount,
             priorMonthLength = priorMonthLength,
-            today = today,
+            today = CalposeDate(
+                day = today,
+                dayOfWeek = todayMonth.atDay(today).dayOfWeek,
+                month = todayMonth
+            ),
             month = month,
-            todayMonth = todayMonth,
-            widgets = widgets,
-            actions = actions
+            widgets = widgets
         )
     }
 }
@@ -108,18 +110,21 @@ fun CalposeWeek(
     monthWeekNumber: Int,
     weekCount: Int,
     priorMonthLength: Int,
-    today: Int,
+    today: CalposeDate,
     month: YearMonth,
-    todayMonth: YearMonth,
-    widgets: CalposeWidgets,
-    actions: CalposeActions
+    widgets: CalposeWidgets
 ) {
     Row {
         if (monthWeekNumber == 0) {
             for (i in 0 until startDayOffSet) {
+                val priorDay = (priorMonthLength - (startDayOffSet - i - 1))
                 widgets.priorMonthDay(
                     this,
-                    (priorMonthLength - (startDayOffSet - i - 1)).toString()
+                    CalposeDate(
+                        priorDay,
+                        month.minusMonths(1).atDay(priorDay).dayOfWeek,
+                        month.minusMonths(1)
+                    )
                 )
             }
         }
@@ -134,15 +139,19 @@ fun CalposeWeek(
             val day = if (monthWeekNumber == 0) i else (i + (7 * monthWeekNumber) - startDayOffSet)
             widgets.day(
                 this,
-                CalposeDate(day, month),
-                CalposeDate(today, todayMonth),
-                actions
+                CalposeDate(day, DayOfWeek.of(i), month),
+                today
             )
         }
 
         if (monthWeekNumber == weekCount && endDayCount > 0) {
             for (i in 0 until (7 - endDayCount)) {
-                widgets.nextMonthDay(this, (i + 1).toString())
+                val nextMonthDay = i + 1
+                widgets.nextMonthDay(this, CalposeDate(
+                    nextMonthDay,
+                    month.plusMonths(1).atDay(nextMonthDay).dayOfWeek,
+                    month.plusMonths(1)
+                ))
             }
         }
     }

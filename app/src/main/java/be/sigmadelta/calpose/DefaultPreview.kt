@@ -62,15 +62,15 @@ fun DefaultCalendar(monthFlow: MutableStateFlow<YearMonth>) {
                     }
                 }
             },
-            day = { day, today, _ ->
-                val isToday = day == today
-                val dayHasPassed = day.day < today.day
-                val isCurrentMonth = day.month == today.month
+            day = { dayDate, todayDate ->
+                val isToday = dayDate == todayDate
+                val dayHasPassed = dayDate.day < todayDate.day
+                val isCurrentMonth = dayDate.month == todayDate.month
 
                 val widget: @Composable () -> Unit = {
                     val weight = if (isToday) 1f else WEIGHT_7DAY_WEEK
                     DefaultDay(
-                        text = day.day.toString(),
+                        text = dayDate.day.toString(),
                         modifier = Modifier.padding(4.dp).weight(weight).fillMaxWidth(),
                         style = TextStyle(
                             color = when {
@@ -98,9 +98,9 @@ fun DefaultCalendar(monthFlow: MutableStateFlow<YearMonth>) {
                     }
                 } else widget()
             },
-            priorMonthDay = { day ->
+            priorMonthDay = { dayDate ->
                 DefaultDay(
-                    text = day,
+                    text = dayDate.day.toString(),
                     style = TextStyle(color = Color(lightGrey)),
                     modifier = Modifier.padding(4.dp).fillMaxWidth().weight(WEIGHT_7DAY_WEEK)
                 )
