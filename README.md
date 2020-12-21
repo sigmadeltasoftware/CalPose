@@ -52,7 +52,7 @@ Using the Calpose Calender is pretty much as straightforward as using any Compos
 ```kotlin
 @Composable
 fun Calpose(
-    monthFlow: StateFlow<YearMonth>,
+    month: YearMonth,
     actions: CalposeActions,
     widgets: CalposeWidgets,
     properties: CalposeProperties = CalposeProperties()
@@ -61,8 +61,8 @@ fun Calpose(
 
 There are 3 main components which have to be passed: 
 
-#### 1. StateFlow<YearMonth>
-Using a `StateFlow` of `java.time.YearMonth`, Calpose is able to determine the calendar structure and render accordingly. By manipulating this value (assigning a different `YearMonth`, you can choose which
+#### 1. YearMonth
+Using a `java.time.YearMonth`, Calpose is able to determine the calendar structure and render accordingly. By manipulating this value (passing a different `YearMonth`, you can choose which
 month should currently be displayed by Calpose.
 
 #### 2. Actions

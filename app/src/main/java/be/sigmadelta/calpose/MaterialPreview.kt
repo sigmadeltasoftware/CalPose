@@ -43,11 +43,12 @@ fun MaterialCalendar(
     monthFlow: MutableStateFlow<YearMonth>,
     selectionSet: MutableStateFlow<Set<CalposeDate>>
 ) {
+
     val selections = selectionSet.collectAsState().value
 
     Column {
         Calpose(
-            monthFlow = monthFlow,
+            month = monthFlow.collectAsState().value,
 
             actions = CalposeActions(
                 onClickedPreviousMonth = { monthFlow.value = monthFlow.value.minusMonths(1) },

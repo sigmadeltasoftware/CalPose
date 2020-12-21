@@ -13,24 +13,19 @@ import be.sigmadelta.calpose.model.CalposeActions
 import be.sigmadelta.calpose.model.CalposeDate
 import be.sigmadelta.calpose.model.CalposeProperties
 import be.sigmadelta.calpose.model.CalposeWidgets
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.StateFlow
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.YearMonth
 
 const val WEIGHT_7DAY_WEEK = 1 / 7f
 
-@ExperimentalCoroutinesApi
 @Composable
 fun Calpose(
-    monthFlow: StateFlow<YearMonth>,
+    month: YearMonth,
     actions: CalposeActions,
     widgets: CalposeWidgets,
     properties: CalposeProperties = CalposeProperties()
 ) {
-    val month by monthFlow.collectAsState()
-
     val todayMonth = YearMonth.now()
 
     Crossfade(

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,9 +30,15 @@ import java.time.YearMonth
 fun DefaultPreview() {
 
     val monthFlow = MutableStateFlow(YearMonth.now())
+    DefaultCalendar(monthFlow)
+}
+
+@ExperimentalCoroutinesApi
+@Composable
+fun DefaultCalendar(monthFlow: MutableStateFlow<YearMonth>) {
 
     Calpose(
-        monthFlow = monthFlow,
+        month = monthFlow.collectAsState().value,
 
         actions = CalposeActions(
             onClickedPreviousMonth = { monthFlow.value = monthFlow.value.minusMonths(1) },
