@@ -4,7 +4,9 @@
 Calpose is a lightweight, easy-to-use Calendar renderer/widget for Android/Jetpack Compose.
 
 ```diff
-! NOTE: Given the Alpha-state of compose, it's important that the Compose-version of Calpose matches yours. Preferably, the latest version would always be used in both cases. Please consult the Version changelog below for more info.
+! NOTE: Given the Alpha-state of compose, it's important that the Compose-version of Calpose matches yours. 
+! Preferably, the latest version would always be used in both cases. 
+! Please consult the Version changelog below for more info.
 ```
 ## Renderer? 
 The goal of Calpose is to avoid imposing rules or limitations in regards to the styling of the calendar. We want you to have full control
@@ -65,8 +67,8 @@ fun Calpose(
 There are 3 main components which have to be passed: 
 
 #### 1. YearMonth
-Using a `java.time.YearMonth`, Calpose is able to determine the calendar structure and render accordingly. By manipulating this value (passing a different `YearMonth`, you can choose which
-month should currently be displayed by Calpose.
+Using a `java.time.YearMonth`, Calpose is able to determine the calendar structure and render accordingly. By manipulating this value (passing a different `YearMonth`), you can choose which
+month should currently be displayed.
 
 #### 2. Actions
 `CalposeActions` is a data class of actions which can be called upon by Calpose. Please consult the dokka documentation of `CalposeActions` (or our examples below) to get a better idea of which actions are 
