@@ -3,6 +3,9 @@
 
 Calpose is a lightweight, easy-to-use Calendar renderer/widget for Android/Jetpack Compose.
 
+```diff
+! NOTE: Given the Alpha-state of compose, it's important that the Compose-version of Calpose matches yours. Preferably, the latest version would always be used in both cases. Please consult the Version changelog below for more info.
+```
 ## Renderer? 
 The goal of Calpose is to avoid imposing rules or limitations in regards to the styling of the calendar. We want you to have full control
 over the UI aspects using Composable widgets while Calpose deals with the Calendar intrinsics. In other words, Calpose will act as a 
@@ -82,6 +85,9 @@ There is also an optional component of `properties` which contains some properti
 [Default widget example](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/DefaultPreview.kt "Default widget example")
 
 [Material widget example with clickable days](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/MaterialPreview.kt "Material widget example")
+
+## Compose-version Changelog
+* V1.0.1: Compose 1.0.0-alpha09
 
 ## License
 MIT License
