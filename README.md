@@ -13,7 +13,7 @@ The goal of Calpose is to avoid imposing rules or limitations in regards to the 
 over the UI aspects using Composable widgets while Calpose deals with the Calendar intrinsics. In other words, Calpose will act as a 
 renderer for your widgets based on the Calendar.
 
-## Features
+## Examples
 ### Default Widgets
 ![](./img/calpose.gif "Default Widgets")
 [DefaultPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/DefaultPreview.kt "Default widget example")
@@ -21,6 +21,10 @@ renderer for your widgets based on the Calendar.
 ### Material
 ![](./img/calpose_material.gif "Material Widgets with selection")
 [MaterialPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/MaterialPreview.kt "Material widget example")
+
+### GeoCities
+![](./img/geocities.gif "Surfing the interw3bz")
+[GeoCitiesPreview.kt](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/GeoCitiesPreview.kt "GeoCities widget example")
 
 ## Installation
 Add Jitpack to your project build.gradle
@@ -82,11 +86,6 @@ to get a better idea of which widgets you can pass, and feel free to take a look
 #### Properties
 There is also an optional component of `properties` which contains some properties for really fine-tuning your experience: 
 [CalposeProperties](https://github.com/sigmadeltasoftware/CalPose/blob/master/calpose/src/main/java/be/sigmadelta/calpose/model/CalposeProperties.kt "CalposeProperties.kt")
-
-## Examples
-[Default widget example](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/DefaultPreview.kt "Default widget example")
-
-[Material widget example with clickable days](https://github.com/sigmadeltasoftware/CalPose/blob/master/app/src/main/java/be/sigmadelta/calpose/MaterialPreview.kt "Material widget example")
 
 ## Compose-version Changelog
 * V1.0.1: Compose 1.0.0-alpha09
