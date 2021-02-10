@@ -31,7 +31,7 @@ fun DefaultHeader(
             onClick = { actions.onClickedPreviousMonth() },
             modifier = Modifier.padding(start = 16.dp)
         ) {
-            Icon(imageVector = vectorResource(id = R.drawable.ic_left))
+            Icon(imageVector = vectorResource(id = R.drawable.ic_left), contentDescription = "Left")
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -51,7 +51,7 @@ fun DefaultHeader(
             onClick = { actions.onClickedNextMonth() },
             modifier = Modifier.padding(end = 16.dp)
         ) {
-            Icon(imageVector = vectorResource(id = R.drawable.ic_right))
+            Icon(imageVector = vectorResource(id = R.drawable.ic_right), contentDescription = "Right")
         }
     }
 }

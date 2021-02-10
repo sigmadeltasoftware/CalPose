@@ -82,7 +82,8 @@ fun GeoCitiesCalendar(
                             ) {
                                 Icon(
                                     imageVector = vectorResource(id = R.drawable.ic_left),
-                                    tint = Color.White
+                                    tint = Color.White,
+                                    contentDescription = "Left"
                                 )
                             }
 
@@ -108,7 +109,8 @@ fun GeoCitiesCalendar(
                             ) {
                                 Icon(
                                     imageVector = vectorResource(id = R.drawable.ic_right),
-                                    tint = Color.White
+                                    tint = Color.White,
+                                    contentDescription = "Right"
                                 )
                             }
                         }

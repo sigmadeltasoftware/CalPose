@@ -2,8 +2,10 @@ package be.sigmadelta.calpose
 
 import android.util.Log
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.InteractionState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.*
@@ -108,7 +110,7 @@ fun MaterialCalendar(
                         Crossfade(current = bgColor) {
                             Box(
                                 modifier = Modifier.preferredSize(28.dp).clip(CircleShape)
-                                    .clickable(onClick = onSelected, indication = null)
+                                    .clickable(onClick = onSelected)
                                     .background(it)
                             ) {
                                 widget()

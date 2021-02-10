@@ -36,7 +36,7 @@ fun MaterialHeader(
             onClick = { actions.onClickedPreviousMonth() },
             modifier = Modifier.padding(start = 16.dp)
         ) {
-            Icon(imageVector = vectorResource(id = R.drawable.ic_left), tint = Color.White)
+            Icon(imageVector = vectorResource(id = R.drawable.ic_left), tint = Color.White, contentDescription = "Left")
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -57,7 +57,7 @@ fun MaterialHeader(
             onClick = { actions.onClickedNextMonth() },
             modifier = Modifier.padding(end = 16.dp)
         ) {
-            Icon(imageVector = vectorResource(id = R.drawable.ic_right), tint = Color.White)
+            Icon(imageVector = vectorResource(id = R.drawable.ic_right), tint = Color.White, contentDescription = "Right")
         }
     }
 }
