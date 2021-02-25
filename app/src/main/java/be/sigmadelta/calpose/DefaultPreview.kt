@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
+//import androidx.ui.tooling.preview.Preview
 import be.sigmadelta.calpose.model.CalposeActions
 import be.sigmadelta.calpose.model.CalposeWidgets
 import be.sigmadelta.calpose.util.lightGrey
@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.YearMonth
 
 @ExperimentalCoroutinesApi
-@Preview
+//@Preview
 @Composable
 fun DefaultPreview() {
 
@@ -90,7 +90,7 @@ fun DefaultCalendar(monthFlow: MutableStateFlow<YearMonth>) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Box(
-                            modifier = Modifier.preferredSize(28.dp).clip(CircleShape)
+                            modifier = Modifier.size(28.dp).clip(CircleShape)
                                 .background(Color(primaryAccent))
                         ) {
                             widget()

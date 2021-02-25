@@ -1,7 +1,7 @@
 object CalposeProps {
     const val applicationId = "be.sigmadelta.calpose"
-    const val versionCode = 7
-    const val versionName = "1.0.3"
+    const val versionCode = 8
+    const val versionName = "1.0.4"
     const val githubGroupId = "com.github.sigmadeltasoftware.calpose"
 }
 
@@ -12,10 +12,10 @@ object Versions {
     const val minSdk = 24
     const val buildTools = "$compileSdk.0.2"
 
-    const val kotlin = "1.4.21-2"
+    const val kotlin = "1.4.30"
     const val core = "1.5.0-alpha05"
     const val core_ktx = core
-    const val compose = "1.0.0-alpha11"
+    const val compose = "1.0.0-beta01"
     const val composeUiTooling = "1.0.0-alpha07"
     const val maven_gradle_plugin = "2.1"
 }

@@ -2,13 +2,14 @@ package be.sigmadelta.calpose
 
 import android.icu.util.Calendar
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.gestures.DraggableState
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.gesture.DragObserver
-import androidx.compose.ui.gesture.dragGestureFilter
 import be.sigmadelta.calpose.model.CalposeActions
 import be.sigmadelta.calpose.model.CalposeDate
 import be.sigmadelta.calpose.model.CalposeProperties
@@ -29,20 +30,18 @@ fun Calpose(
     val todayMonth = YearMonth.now()
 
     Crossfade(
-        current = month,
-        animation = properties.changeMonthAnimation
+        targetState = month,
+        animationSpec = properties.changeMonthAnimation
     ) {
         val monthWidget: @Composable () -> Unit = {
             Column(
-                modifier = Modifier.dragGestureFilter(object: DragObserver {
-                    override fun onStop(velocity: Offset) {
-                        super.onStop(velocity)
-                        if (velocity.x > properties.changeMonthSwipeTriggerVelocity) {
+                modifier = Modifier.draggable(orientation = Orientation.Horizontal, state = DraggableState {}
+                    ,onDragStopped = { velocity ->
+                        if (velocity > properties.changeMonthSwipeTriggerVelocity) {
                             actions.onSwipedPreviousMonth()
-                        } else if (velocity.x < -properties.changeMonthSwipeTriggerVelocity) {
+                        } else if (velocity < -properties.changeMonthSwipeTriggerVelocity) {
                             actions.onSwipedNextMonth()
                         }
-                    }
                 })
             ) {
                 CalposeHeader(it, todayMonth, actions, widgets)

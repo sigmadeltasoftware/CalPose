@@ -1,6 +1,6 @@
 package be.sigmadelta.calpose.model
 
-import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.tween
 
 /**
@@ -13,6 +13,6 @@ import androidx.compose.animation.core.tween
  */
 
 data class CalposeProperties (
-    val changeMonthAnimation: AnimationSpec<Float> = tween(durationMillis = 200),
+    val changeMonthAnimation: FiniteAnimationSpec<Float> = tween(durationMillis = 200),
     val changeMonthSwipeTriggerVelocity: Int = 300
 )

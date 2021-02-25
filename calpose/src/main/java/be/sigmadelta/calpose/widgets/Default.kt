@@ -9,6 +9,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +32,7 @@ fun DefaultHeader(
             onClick = { actions.onClickedPreviousMonth() },
             modifier = Modifier.padding(start = 16.dp)
         ) {
-            Icon(imageVector = vectorResource(id = R.drawable.ic_left), contentDescription = "Left")
+            Icon(imageVector = ImageVector.vectorResource(id = R.drawable.ic_left), contentDescription = "Left")
         }
 
         Spacer(modifier = Modifier.weight(1f))
@@ -51,7 +52,7 @@ fun DefaultHeader(
             onClick = { actions.onClickedNextMonth() },
             modifier = Modifier.padding(end = 16.dp)
         ) {
-            Icon(imageVector = vectorResource(id = R.drawable.ic_right), contentDescription = "Right")
+            Icon(imageVector = ImageVector.vectorResource(id = R.drawable.ic_right), contentDescription = "Right")
         }
     }
 }

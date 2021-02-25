@@ -2,7 +2,6 @@ package be.sigmadelta.calpose
 
 import android.util.Log
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.InteractionState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.indication
@@ -17,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
+//import androidx.ui.tooling.preview.Preview
 import be.sigmadelta.calpose.model.CalposeActions
 import be.sigmadelta.calpose.model.CalposeDate
 import be.sigmadelta.calpose.model.CalposeWidgets
@@ -31,7 +30,7 @@ import kotlinx.coroutines.flow.map
 import java.time.YearMonth
 
 @ExperimentalCoroutinesApi
-@Preview
+//@Preview
 @Composable
 fun MaterialPreview() {
 
@@ -107,9 +106,9 @@ fun MaterialCalendar(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        Crossfade(current = bgColor) {
+                        Crossfade(targetState = bgColor) {
                             Box(
-                                modifier = Modifier.preferredSize(28.dp).clip(CircleShape)
+                                modifier = Modifier.size(28.dp).clip(CircleShape)
                                     .clickable(onClick = onSelected)
                                     .background(it)
                             ) {

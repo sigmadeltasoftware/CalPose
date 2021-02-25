@@ -1,5 +1,6 @@
 package be.sigmadelta.calpose
 
+//import androidx.ui.tooling.preview.Preview
 import android.widget.ImageView
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -9,20 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.ui.tooling.preview.Preview
 import be.sigmadelta.calpose.model.CalposeActions
 import be.sigmadelta.calpose.model.CalposeWidgets
 import be.sigmadelta.calpose.util.comicSans
-import be.sigmadelta.calpose.widgets.DefaultDay
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +29,7 @@ import java.time.Month
 import java.time.YearMonth
 
 @ExperimentalCoroutinesApi
-@Preview
+//@Preview
 @Composable
 fun GeoCitiesPreview() {
 
@@ -44,7 +42,7 @@ fun GeoCitiesPreview() {
 fun GeoCitiesCalendar(
     monthFlow: MutableStateFlow<YearMonth>,
 ) {
-    val ctx = AmbientContext.current
+    val ctx = LocalContext.current
     val maxSize = 50.dp
 
     Column {
@@ -64,7 +62,7 @@ fun GeoCitiesCalendar(
                             Month.DECEMBER -> "https://web.archive.org/web/20091027183234/http://geocities.com/ladysylviaann/sylvia/xmas/christmas2001top.gif"
                             else -> "https://web.archive.org/web/20090820060518/http://geocities.com/SunsetStrip/Frontrow/8467/bigfire.gif"
                         }
-                        AndroidView(viewBlock = {
+                        AndroidView(factory = {
                             val img = ImageView(it)
                             Glide.with(ctx)
                                 .asGif()
@@ -81,7 +79,7 @@ fun GeoCitiesCalendar(
                                 modifier = Modifier.padding(start = 16.dp)
                             ) {
                                 Icon(
-                                    imageVector = vectorResource(id = R.drawable.ic_left),
+                                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_left),
                                     tint = Color.White,
                                     contentDescription = "Left"
                                 )
@@ -108,7 +106,7 @@ fun GeoCitiesCalendar(
                                 modifier = Modifier.padding(end = 16.dp)
                             ) {
                                 Icon(
-                                    imageVector = vectorResource(id = R.drawable.ic_right),
+                                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_right),
                                     tint = Color.White,
                                     contentDescription = "Right"
                                 )
@@ -130,7 +128,7 @@ fun GeoCitiesCalendar(
                                 DayOfWeek.SATURDAY -> "https://web.archive.org/web/20091027000657/http://br.geocities.com/raridadesvideo2/images/s_estrel.gif"
                                 DayOfWeek.SUNDAY -> "https://web.archive.org/web/20091027001442/http://mx.geocities.com/grupo_horizontes/images/s.gif"
                             }
-                            AndroidView(viewBlock = {
+                            AndroidView(factory = {
                                 val img = ImageView(it)
                                 Glide.with(ctx)
                                     .asGif()
@@ -152,7 +150,7 @@ fun GeoCitiesCalendar(
                         DayOfWeek.SATURDAY -> "https://web.archive.org/web/20091023114223im_/http://geocities.com/Colosseum/Midfield/1874/dancing_baby.gif"
                         DayOfWeek.SUNDAY -> "https://web.archive.org/web/20091027064945/http://hk.geocities.com/yeahsleepyeah/aarest.gif"
                     }
-                    AndroidView(viewBlock = {
+                    AndroidView(factory = {
                         val img = ImageView(it)
                         Glide.with(ctx)
                             .asGif()
@@ -163,7 +161,7 @@ fun GeoCitiesCalendar(
                 },
 
                 priorMonthDay = {
-                    AndroidView(viewBlock = {
+                    AndroidView(factory = {
                         val img = ImageView(it)
                         Glide.with(ctx)
                             .asGif()
@@ -174,7 +172,7 @@ fun GeoCitiesCalendar(
                 },
             )
         )
-        AndroidView(viewBlock = {
+        AndroidView(factory = {
             val img = ImageView(it)
             Glide.with(ctx)
                 .asGif()
