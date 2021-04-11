@@ -1,6 +1,5 @@
 package be.sigmadelta.calpose
 
-//import androidx.ui.tooling.preview.Preview
 import android.widget.ImageView
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -15,6 +14,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -29,7 +29,7 @@ import java.time.Month
 import java.time.YearMonth
 
 @ExperimentalCoroutinesApi
-//@Preview
+@Preview("GeoCitiesPreview")
 @Composable
 fun GeoCitiesPreview() {
 

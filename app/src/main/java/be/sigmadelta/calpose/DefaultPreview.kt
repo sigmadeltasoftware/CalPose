@@ -12,8 +12,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-//import androidx.ui.tooling.preview.Preview
 import be.sigmadelta.calpose.model.CalposeActions
 import be.sigmadelta.calpose.model.CalposeWidgets
 import be.sigmadelta.calpose.util.lightGrey
@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.YearMonth
 
 @ExperimentalCoroutinesApi
-//@Preview
+@Preview("DefaultPreview")
 @Composable
 fun DefaultPreview() {
 

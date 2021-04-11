@@ -6,24 +6,24 @@ object CalposeProps {
 }
 
 object Versions {
-    const val gradleTools = "4.2.0-alpha16"
+    const val gradleTools = "7.0.0-alpha14"
     const val compileSdk = 30
     const val targetSdk = compileSdk
     const val minSdk = 24
     const val buildTools = "$compileSdk.0.2"
 
-    const val kotlin = "1.4.30"
-    const val core = "1.5.0-alpha05"
+    const val kotlin = "1.4.32"
+    const val core = "1.5.0-rc01"
     const val core_ktx = core
     const val compose = "1.0.0-beta01"
-    const val composeUiTooling = "1.0.0-alpha07"
+    const val composeUiTooling = "1.0.0-beta01"
     const val maven_gradle_plugin = "2.1"
 }
 
 object Compose {
     const val ui = "androidx.compose.ui:ui:${Versions.compose}"
     const val uiGraphics = "androidx.compose.ui:ui-graphics:${Versions.compose}"
-    const val uiTooling = "androidx.ui:ui-tooling:${Versions.composeUiTooling}"
+    const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.composeUiTooling}"
     const val foundationLayout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
     const val material = "androidx.compose.material:material:${Versions.compose}"
     const val runtimeLiveData =  "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
