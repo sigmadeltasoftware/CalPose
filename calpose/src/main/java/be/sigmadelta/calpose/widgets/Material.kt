@@ -42,15 +42,9 @@ fun MaterialHeader(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Text(
-            text = "${month.month.name.toLowerCase().capitalize()} ${month.year}",
-            modifier = Modifier.padding(vertical = 16.dp),
-            style = TextStyle(
-                color = Color.White,
-                fontWeight = if (isCurrentMonth) FontWeight.Bold else FontWeight.SemiBold,
-                fontSize = 22.sp,
-            )
-        )
+        DefaultMonthTitle(month = month,
+            isCurrentMonth = isCurrentMonth,
+            textStyle = TextStyle(fontSize = 22.sp))
 
         Spacer(modifier = Modifier.weight(1f))
 

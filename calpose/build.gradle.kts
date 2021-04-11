@@ -8,7 +8,12 @@ android {
     compileSdkVersion(Versions.compileSdk)
     buildToolsVersion(Versions.buildTools)
 
+    defaultConfig{
+        minSdkVersion(Versions.minSdk)
+    }
+
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -61,6 +66,7 @@ afterEvaluate {
 }
 
 dependencies {
+    coreLibraryDesugaring(Android.desugar_jdk)
     api(Compose.ui)
     api(Compose.uiGraphics)
     api(Compose.uiTooling)
