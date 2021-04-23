@@ -14,7 +14,7 @@ object Versions {
 
     const val kotlin = "1.4.32"
     const val core = "1.5.0-rc01"
-    const val compose = "1.0.0-beta04"
+    const val compose = "1.0.0-beta05"
     const val maven_gradle_plugin = "2.1"
     const val desugar_jdk = "1.1.5"
 }
