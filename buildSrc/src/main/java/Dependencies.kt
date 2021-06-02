@@ -6,24 +6,23 @@ object CalposeProps {
 }
 
 object Versions {
-    const val gradleTools = "4.2.0-alpha16"
+    const val gradleTools = "7.0.0-alpha15"
     const val compileSdk = 30
     const val targetSdk = compileSdk
     const val minSdk = 24
     const val buildTools = "$compileSdk.0.2"
 
-    const val kotlin = "1.4.30"
-    const val core = "1.5.0-alpha05"
-    const val core_ktx = core
-    const val compose = "1.0.0-beta01"
-    const val composeUiTooling = "1.0.0-alpha07"
+    const val kotlin = "1.4.32"
+    const val core = "1.5.0-rc02"
+    const val compose = "1.0.0-beta06"
     const val maven_gradle_plugin = "2.1"
+    const val desugar_jdk = "1.1.5"
 }
 
 object Compose {
     const val ui = "androidx.compose.ui:ui:${Versions.compose}"
     const val uiGraphics = "androidx.compose.ui:ui-graphics:${Versions.compose}"
-    const val uiTooling = "androidx.ui:ui-tooling:${Versions.composeUiTooling}"
+    const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val foundationLayout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
     const val material = "androidx.compose.material:material:${Versions.compose}"
     const val runtimeLiveData =  "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
@@ -31,6 +30,7 @@ object Compose {
 }
 
 object Android {
-    const val core = "androidx.core:core:${Versions.core_ktx}"
-    const val core_ktx = "androidx.core:core-ktx:${Versions.core_ktx}"
+    const val core = "androidx.core:core-ktx:${Versions.core}"
+    const val desugar_jdk ="com.android.tools:desugar_jdk_libs:${Versions.desugar_jdk}"
 }
+

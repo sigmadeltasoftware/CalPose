@@ -8,16 +8,21 @@ android {
     compileSdkVersion(Versions.compileSdk)
     buildToolsVersion(Versions.buildTools)
 
+    defaultConfig{
+        minSdkVersion(Versions.minSdk)
+    }
+
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        useIR = true
     }
 
     composeOptions {
-        kotlinCompilerVersion = Versions.kotlin
         kotlinCompilerExtensionVersion = Versions.compose
     }
 
@@ -41,17 +46,10 @@ android {
     }
 }
 
-// Add against compose errors with kotlin compilers
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check")
-    }
-}
 
 val sourcesJar by tasks.registering(Jar::class) {
     archiveClassifier.set("sources")
-    from(android.sourceSets.getByName("main").java.srcDirs)
+    from(kotlin.sourceSets.getByName("main").kotlin.srcDirs)
 }
 
 afterEvaluate {
@@ -69,6 +67,7 @@ afterEvaluate {
 }
 
 dependencies {
+    coreLibraryDesugaring(Android.desugar_jdk)
     api(Compose.ui)
     api(Compose.uiGraphics)
     api(Compose.uiTooling)

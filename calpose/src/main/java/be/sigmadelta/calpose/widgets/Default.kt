@@ -2,7 +2,6 @@ package be.sigmadelta.calpose.widgets
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -12,10 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import be.sigmadelta.calpose.model.CalposeActions
 import be.sigmadelta.calpose.R
 import java.time.YearMonth
@@ -37,14 +34,8 @@ fun DefaultHeader(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Text(
-            text = "${month.month.name.toLowerCase().capitalize()} ${month.year}",
-            modifier = Modifier.padding(vertical = 8.dp),
-            style = TextStyle(
-                fontWeight = if (isCurrentMonth) FontWeight.Bold else FontWeight.SemiBold,
-                fontSize = 22.sp,
-            )
-        )
+
+        DefaultMonthTitle(month = month,isCurrentMonth = isCurrentMonth)
 
         Spacer(modifier = Modifier.weight(1f))
 
