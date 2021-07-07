@@ -6,8 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,40 +22,37 @@ import be.sigmadelta.calpose.model.CalposeActions
 import be.sigmadelta.calpose.model.CalposeWidgets
 import be.sigmadelta.calpose.util.comicSans
 import com.bumptech.glide.Glide
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.Month
 import org.threeten.bp.YearMonth
 
 @SuppressLint("NewApi")
-@ExperimentalCoroutinesApi
 @Preview("GeoCitiesPreview")
 @Composable
 fun GeoCitiesPreview() {
-
-    val monthFlow = MutableStateFlow(YearMonth.now())
-    GeoCitiesCalendar(monthFlow)
+    var month by remember { mutableStateOf(YearMonth.now()) }
+    GeoCitiesCalendar(
+        month = month,
+        actions = CalposeActions(
+            onClickedPreviousMonth = { month = month.minusMonths(1) },
+            onClickedNextMonth = { month = month.plusMonths(1) },
+        ),
+    )
 }
 
 @SuppressLint("NewApi")
-@ExperimentalCoroutinesApi
 @Composable
 fun GeoCitiesCalendar(
-    monthFlow: MutableStateFlow<YearMonth>,
+    month: YearMonth,
+    actions: CalposeActions,
 ) {
     val ctx = LocalContext.current
     val maxSize = 50.dp
 
     Column {
         Calpose(
-            month = monthFlow.collectAsState().value,
-
-            actions = CalposeActions(
-                onClickedPreviousMonth = { monthFlow.value = monthFlow.value.minusMonths(1) },
-                onClickedNextMonth = { monthFlow.value = monthFlow.value.plusMonths(1) },
-            ),
-
+            month = month,
+            actions = actions,
             widgets = CalposeWidgets(
                 header = { month, todayMonth, actions ->
                     Box(contentAlignment = Alignment.Center) {
