@@ -1,6 +1,8 @@
 package be.sigmadelta.calpose
 
 import android.icu.util.Calendar
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.gestures.DraggableState
 import androidx.compose.foundation.gestures.Orientation
@@ -17,9 +19,11 @@ import be.sigmadelta.calpose.model.CalposeWidgets
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.YearMonth
+import java.util.*
 
 const val WEIGHT_7DAY_WEEK = 1 / 7f
 
+@RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun Calpose(
     month: YearMonth,
@@ -82,7 +86,7 @@ fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, widgets: CalposeWidget
     val priorMonthLength = month.minusMonths(1).lengthOfMonth()
     val lastDayCount = (monthLength + firstDayOffset) % 7
     val weekCount = (firstDayOffset + monthLength) / 7
-    val today = SimpleDateFormat("dd").format(Calendar.getInstance().time).toInt()
+    val today = SimpleDateFormat("dd").format(Date(System.currentTimeMillis())).toInt()
 
     for (i in 0..weekCount) {
         CalposeWeek(

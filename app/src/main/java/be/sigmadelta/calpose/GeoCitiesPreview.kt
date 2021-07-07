@@ -1,5 +1,6 @@
 package be.sigmadelta.calpose
 
+import android.annotation.SuppressLint
 import android.widget.ImageView
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -28,6 +29,7 @@ import java.time.DayOfWeek
 import java.time.Month
 import java.time.YearMonth
 
+@SuppressLint("NewApi")
 @ExperimentalCoroutinesApi
 @Preview("GeoCitiesPreview")
 @Composable
@@ -37,6 +39,7 @@ fun GeoCitiesPreview() {
     GeoCitiesCalendar(monthFlow)
 }
 
+@SuppressLint("NewApi")
 @ExperimentalCoroutinesApi
 @Composable
 fun GeoCitiesCalendar(

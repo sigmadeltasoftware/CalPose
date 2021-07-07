@@ -1,5 +1,6 @@
 package be.sigmadelta.calpose
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -24,6 +25,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.YearMonth
 
+@SuppressLint("NewApi")
 @ExperimentalCoroutinesApi
 @Preview("DefaultPreview")
 @Composable
@@ -33,6 +35,7 @@ fun DefaultPreview() {
     DefaultCalendar(monthFlow)
 }
 
+@SuppressLint("NewApi")
 @ExperimentalCoroutinesApi
 @Composable
 fun DefaultCalendar(monthFlow: MutableStateFlow<YearMonth>) {

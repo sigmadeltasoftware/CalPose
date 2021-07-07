@@ -1,5 +1,6 @@
 package be.sigmadelta.calpose
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,6 +27,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.YearMonth
 
+@SuppressLint("NewApi")
 @ExperimentalCoroutinesApi
 @Preview("MaterialPreview")
 @Composable
@@ -37,6 +39,7 @@ fun MaterialPreview() {
     MaterialCalendar(monthFlow, selectionSet)
 }
 
+@SuppressLint("NewApi")
 @ExperimentalCoroutinesApi
 @Composable
 fun MaterialCalendar(

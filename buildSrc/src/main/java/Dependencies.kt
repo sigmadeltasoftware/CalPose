@@ -9,12 +9,12 @@ object Versions {
     const val gradleTools = "7.0.0-alpha15"
     const val compileSdk = 30
     const val targetSdk = compileSdk
-    const val minSdk = 24
+    const val minSdk = 23
     const val buildTools = "$compileSdk.0.2"
 
-    const val kotlin = "1.4.32"
+    const val kotlin = "1.5.20"
     const val core = "1.5.0-rc02"
-    const val compose = "1.0.0-beta06"
+    const val compose = "1.0.0-beta09"
     const val maven_gradle_plugin = "2.1"
     const val desugar_jdk = "1.1.5"
 }
