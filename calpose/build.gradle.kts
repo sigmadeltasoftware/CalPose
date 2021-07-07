@@ -68,6 +68,7 @@ afterEvaluate {
 
 dependencies {
     coreLibraryDesugaring(Android.desugar_jdk)
+    api(Android.threeten)
     api(Compose.ui)
     api(Compose.uiGraphics)
     api(Compose.uiTooling)

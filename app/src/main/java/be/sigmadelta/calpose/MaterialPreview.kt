@@ -1,12 +1,12 @@
 package be.sigmadelta.calpose
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -25,9 +25,8 @@ import be.sigmadelta.calpose.widgets.DefaultDay
 import be.sigmadelta.calpose.widgets.MaterialHeader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.time.YearMonth
+import org.threeten.bp.YearMonth
 
-@SuppressLint("NewApi")
 @ExperimentalCoroutinesApi
 @Preview("MaterialPreview")
 @Composable
@@ -39,7 +38,6 @@ fun MaterialPreview() {
     MaterialCalendar(monthFlow, selectionSet)
 }
 
-@SuppressLint("NewApi")
 @ExperimentalCoroutinesApi
 @Composable
 fun MaterialCalendar(
@@ -64,13 +62,16 @@ fun MaterialCalendar(
                 },
                 headerDayRow = { headerDayList ->
                     Row(
-                        modifier = Modifier.fillMaxWidth(1f)
+                        modifier = Modifier
+                            .fillMaxWidth(1f)
                             .padding(vertical = 8.dp),
                     ) {
                         headerDayList.forEach {
                             DefaultDay(
                                 text = it.name.first().toString(),
-                                modifier = Modifier.weight(WEIGHT_7DAY_WEEK).alpha(.6f),
+                                modifier = Modifier
+                                    .weight(WEIGHT_7DAY_WEEK)
+                                    .alpha(.6f),
                                 style = TextStyle(color = Color.Gray, fontWeight = FontWeight.Bold)
                             )
                         }
@@ -89,7 +90,10 @@ fun MaterialCalendar(
                     val widget: @Composable () -> Unit = {
                         DefaultDay(
                             text = dayDate.day.toString(),
-                            modifier = Modifier.padding(4.dp).weight(weight).fillMaxWidth(),
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .weight(weight)
+                                .fillMaxWidth(),
                             style = TextStyle(
                                 color = when {
                                     isSelected -> Color.White
@@ -108,7 +112,9 @@ fun MaterialCalendar(
 
                         Crossfade(targetState = bgColor) {
                             Box(
-                                modifier = Modifier.size(28.dp).clip(CircleShape)
+                                modifier = Modifier
+                                    .size(28.dp)
+                                    .clip(CircleShape)
                                     .clickable(onClick = onSelected)
                                     .background(it)
                             ) {
@@ -122,7 +128,10 @@ fun MaterialCalendar(
                     DefaultDay(
                         text = dayDate.day.toString(),
                         style = TextStyle(color = Color(lightGrey)),
-                        modifier = Modifier.padding(4.dp).fillMaxWidth().weight(WEIGHT_7DAY_WEEK)
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .fillMaxWidth()
+                            .weight(WEIGHT_7DAY_WEEK)
                     )
                 },
             )

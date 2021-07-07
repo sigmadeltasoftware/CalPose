@@ -23,7 +23,7 @@ import be.sigmadelta.calpose.widgets.DefaultDay
 import be.sigmadelta.calpose.widgets.DefaultHeader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.time.YearMonth
+import org.threeten.bp.YearMonth
 
 @SuppressLint("NewApi")
 @ExperimentalCoroutinesApi
@@ -54,7 +54,9 @@ fun DefaultCalendar(monthFlow: MutableStateFlow<YearMonth>) {
             },
             headerDayRow = { headerDayList ->
                 Row(
-                    modifier = Modifier.fillMaxWidth(1f).padding(bottom = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth(1f)
+                        .padding(bottom = 16.dp),
                 ) {
                     headerDayList.forEach {
                         DefaultDay(
@@ -74,7 +76,10 @@ fun DefaultCalendar(monthFlow: MutableStateFlow<YearMonth>) {
                     val weight = if (isToday) 1f else WEIGHT_7DAY_WEEK
                     DefaultDay(
                         text = dayDate.day.toString(),
-                        modifier = Modifier.padding(4.dp).weight(weight).fillMaxWidth(),
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .weight(weight)
+                            .fillMaxWidth(),
                         style = TextStyle(
                             color = when {
                                 isCurrentMonth && dayHasPassed -> Color.Gray
@@ -93,7 +98,9 @@ fun DefaultCalendar(monthFlow: MutableStateFlow<YearMonth>) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Box(
-                            modifier = Modifier.size(28.dp).clip(CircleShape)
+                            modifier = Modifier
+                                .size(28.dp)
+                                .clip(CircleShape)
                                 .background(Color(primaryAccent))
                         ) {
                             widget()
@@ -105,7 +112,10 @@ fun DefaultCalendar(monthFlow: MutableStateFlow<YearMonth>) {
                 DefaultDay(
                     text = dayDate.day.toString(),
                     style = TextStyle(color = Color(lightGrey)),
-                    modifier = Modifier.padding(4.dp).fillMaxWidth().weight(WEIGHT_7DAY_WEEK)
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth()
+                        .weight(WEIGHT_7DAY_WEEK)
                 )
             },
             headerContainer = { header ->
