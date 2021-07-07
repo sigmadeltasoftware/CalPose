@@ -13,9 +13,9 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import be.sigmadelta.calpose.model.CalposeActions
 import be.sigmadelta.calpose.R
-import java.time.YearMonth
+import be.sigmadelta.calpose.model.CalposeActions
+import org.threeten.bp.YearMonth
 
 @Composable
 fun DefaultHeader(
