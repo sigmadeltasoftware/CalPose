@@ -12,7 +12,7 @@ object Versions {
     const val minSdk = 23
     const val buildTools = "$compileSdk.0.2"
 
-    const val kotlin = "1.5.20"
+    const val kotlin = "1.5.10"
     const val core = "1.5.0-rc02"
     const val compose = "1.0.0-beta09"
     const val maven_gradle_plugin = "2.1"
