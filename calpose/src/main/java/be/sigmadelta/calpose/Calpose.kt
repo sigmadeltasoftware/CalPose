@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import be.sigmadelta.calpose.model.CalposeActions
@@ -23,36 +24,51 @@ const val WEIGHT_7DAY_WEEK = 1 / 7f
 
 @Composable
 fun Calpose(
+    modifier: Modifier = Modifier,
     month: YearMonth,
     actions: CalposeActions,
     widgets: CalposeWidgets,
     properties: CalposeProperties = CalposeProperties()
 ) {
-    val todayMonth = YearMonth.now()
-
     Crossfade(
         targetState = month,
         animationSpec = properties.changeMonthAnimation
     ) {
-        val monthWidget: @Composable () -> Unit = {
-            Column(
-                modifier = Modifier.draggable(orientation = Orientation.Horizontal, state = DraggableState {}
-                    ,onDragStopped = { velocity ->
-                        if (velocity > properties.changeMonthSwipeTriggerVelocity) {
-                            actions.onSwipedPreviousMonth()
-                        } else if (velocity < -properties.changeMonthSwipeTriggerVelocity) {
-                            actions.onSwipedNextMonth()
-                        }
-                })
-            ) {
-                CalposeHeader(it, todayMonth, actions, widgets)
-                CalposeMonth(it, todayMonth, widgets)
-            }
-        }
-
-        widgets.monthContainer?.let { it(monthWidget) } ?: monthWidget()
+        CalposeStatic(
+            modifier = modifier,
+            month = it,
+            actions = actions,
+            widgets = widgets
+        )
     }
 
+}
+
+@Composable
+fun CalposeStatic(
+    modifier: Modifier = Modifier,
+    month: YearMonth,
+    actions: CalposeActions,
+    widgets: CalposeWidgets,
+    properties: CalposeProperties = CalposeProperties()
+) {
+    val todayMonth = remember { YearMonth.now() }
+
+    Column(
+        modifier = modifier.draggable(
+            orientation = Orientation.Horizontal,
+            state = DraggableState {},
+            onDragStopped = { velocity ->
+                if (velocity > properties.changeMonthSwipeTriggerVelocity) {
+                    actions.onSwipedPreviousMonth()
+                } else if (velocity < -properties.changeMonthSwipeTriggerVelocity) {
+                    actions.onSwipedNextMonth()
+                }
+            })
+    ) {
+        CalposeHeader(month, todayMonth, actions, widgets)
+        widgets.monthContainer { CalposeMonth(month, todayMonth, widgets) }
+    }
 }
 
 @Composable
@@ -62,7 +78,7 @@ fun CalposeHeader(
     actions: CalposeActions,
     widgets: CalposeWidgets
 ) {
-    val header: @Composable () -> Unit = {
+    widgets.headerContainer {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -71,8 +87,6 @@ fun CalposeHeader(
             widgets.headerDayRow(DayOfWeek.values().toSet())
         }
     }
-
-    widgets.headerContainer?.let { it(header) } ?: header()
 }
 
 @Composable
@@ -86,20 +100,22 @@ fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, widgets: CalposeWidget
     val today = SimpleDateFormat("dd").format(Date(System.currentTimeMillis())).toInt()
 
     for (i in 0..weekCount) {
-        CalposeWeek(
-            startDayOffSet = firstDayOffset,
-            endDayCount = lastDayCount,
-            monthWeekNumber = i,
-            weekCount = weekCount,
-            priorMonthLength = priorMonthLength,
-            today = CalposeDate(
-                day = today,
-                dayOfWeek = todayMonth.atDay(today).dayOfWeek,
-                month = todayMonth
-            ),
-            month = month,
-            widgets = widgets
-        )
+        widgets.weekContainer {
+            CalposeWeek(
+                startDayOffSet = firstDayOffset,
+                endDayCount = lastDayCount,
+                monthWeekNumber = i,
+                weekCount = weekCount,
+                priorMonthLength = priorMonthLength,
+                today = CalposeDate(
+                    day = today,
+                    dayOfWeek = todayMonth.atDay(today).dayOfWeek,
+                    month = todayMonth
+                ),
+                month = month,
+                widgets = widgets
+            )
+        }
     }
 }
 
@@ -147,11 +163,13 @@ fun CalposeWeek(
         if (monthWeekNumber == weekCount && endDayCount > 0) {
             for (i in 0 until (7 - endDayCount)) {
                 val nextMonthDay = i + 1
-                widgets.nextMonthDay(this, CalposeDate(
-                    nextMonthDay,
-                    month.plusMonths(1).atDay(nextMonthDay).dayOfWeek,
-                    month.plusMonths(1)
-                ))
+                widgets.nextMonthDay(
+                    this, CalposeDate(
+                        nextMonthDay,
+                        month.plusMonths(1).atDay(nextMonthDay).dayOfWeek,
+                        month.plusMonths(1)
+                    )
+                )
             }
         }
     }

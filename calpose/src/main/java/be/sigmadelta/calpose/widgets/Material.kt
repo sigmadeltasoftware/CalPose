@@ -24,7 +24,8 @@ fun MaterialHeader(
     month: YearMonth,
     todayMonth: YearMonth,
     actions: CalposeActions,
-    backgroundColor: Color
+    backgroundColor: Color,
+    titleContainer: @Composable (@Composable () -> Unit) -> Unit = { it() }
 ) {
     val isCurrentMonth = todayMonth == month
     Row(
@@ -35,14 +36,22 @@ fun MaterialHeader(
             onClick = { actions.onClickedPreviousMonth() },
             modifier = Modifier.padding(start = 16.dp)
         ) {
-            Icon(imageVector = ImageVector.vectorResource(id = R.drawable.ic_left), tint = Color.White, contentDescription = "Left")
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_left),
+                tint = Color.White,
+                contentDescription = "Left"
+            )
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
-        DefaultMonthTitle(month = month,
-            isCurrentMonth = isCurrentMonth,
-            textStyle = TextStyle(fontSize = 22.sp))
+        titleContainer {
+            DefaultMonthTitle(
+                month = month,
+                isCurrentMonth = isCurrentMonth,
+                textStyle = TextStyle(fontSize = 22.sp)
+            )
+        }
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -50,7 +59,11 @@ fun MaterialHeader(
             onClick = { actions.onClickedNextMonth() },
             modifier = Modifier.padding(end = 16.dp)
         ) {
-            Icon(imageVector = ImageVector.vectorResource(id = R.drawable.ic_right), tint = Color.White, contentDescription = "Right")
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_right),
+                tint = Color.White,
+                contentDescription = "Right"
+            )
         }
     }
 }

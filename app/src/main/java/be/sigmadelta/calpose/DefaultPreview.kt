@@ -5,8 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,33 +20,31 @@ import be.sigmadelta.calpose.util.lightGrey
 import be.sigmadelta.calpose.util.primaryAccent
 import be.sigmadelta.calpose.widgets.DefaultDay
 import be.sigmadelta.calpose.widgets.DefaultHeader
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import org.threeten.bp.YearMonth
 
 @SuppressLint("NewApi")
-@ExperimentalCoroutinesApi
 @Preview("DefaultPreview")
 @Composable
 fun DefaultPreview() {
-
-    val monthFlow = MutableStateFlow(YearMonth.now())
-    DefaultCalendar(monthFlow)
+    var month by remember { mutableStateOf(YearMonth.now()) }
+    DefaultCalendar(
+        month = month,
+        actions = CalposeActions(
+            onClickedPreviousMonth = { month = month.minusMonths(1) },
+            onClickedNextMonth = { month = month.plusMonths(1) }
+        )
+    )
 }
 
 @SuppressLint("NewApi")
-@ExperimentalCoroutinesApi
 @Composable
-fun DefaultCalendar(monthFlow: MutableStateFlow<YearMonth>) {
-
+fun DefaultCalendar(
+    month: YearMonth,
+    actions: CalposeActions
+) {
     Calpose(
-        month = monthFlow.collectAsState().value,
-
-        actions = CalposeActions(
-            onClickedPreviousMonth = { monthFlow.value = monthFlow.value.minusMonths(1) },
-            onClickedNextMonth = { monthFlow.value = monthFlow.value.plusMonths(1) }
-        ),
-
+        month = month,
+        actions = actions,
         widgets = CalposeWidgets(
             header = { month, todayMonth, actions ->
                 DefaultHeader(month, todayMonth, actions)
