@@ -71,7 +71,7 @@ fun Calpose(
 There are 3 main components which have to be passed: 
 
 #### 1. YearMonth
-Using a `java.time.YearMonth`, Calpose is able to determine the calendar structure and render accordingly. By manipulating this value (passing a different `YearMonth`), you can choose which
+Using a `YearMonth`, Calpose is able to determine the calendar structure and render accordingly. By manipulating this value (passing a different `YearMonth`), you can choose which
 month should currently be displayed.
 
 #### 2. Actions
@@ -88,6 +88,7 @@ There is also an optional component of `properties` which contains some properti
 [CalposeProperties](https://github.com/sigmadeltasoftware/CalPose/blob/master/calpose/src/main/java/be/sigmadelta/calpose/model/CalposeProperties.kt "CalposeProperties.kt")
 
 ## Compose-version Changelog
+* V1.0.5: Compose 1.0.0-beta09
 * V1.0.4: Compose 1.0.0-beta01
 * V1.0.3: Compose 1.0.0-alpha11
 * V1.0.2: Compose 1.0.0-alpha10
