@@ -23,7 +23,11 @@ import org.threeten.bp.YearMonth
  *                           Useful if you want to place the header inside of a *Card* f.e.
  *
  * @property monthContainer Widget which can define a container layout for the month overview.
- *                          Can be used to change the background color of the month overview f.e.
+ *                          Can be used to change the background color, change animation of the
+ *                          month overview
+ *
+ * @property weekContainer Widget which can define a container layout for the week. Can be
+ *                          used to change the background color of the week or make dividers between them.
  */
 data class CalposeWidgets(
     val header: @Composable (month: YearMonth, todayMonth: YearMonth, actions: CalposeActions) -> Unit,
@@ -31,6 +35,7 @@ data class CalposeWidgets(
     val day: @Composable RowScope.(dayDate: CalposeDate, todayDate: CalposeDate) -> Unit,
     val priorMonthDay: @Composable RowScope.(dayDate: CalposeDate) -> Unit,
     val nextMonthDay: @Composable RowScope.(dayDate: CalposeDate) -> Unit = priorMonthDay,
-    val headerContainer: @Composable ((@Composable () -> Unit) -> Unit)? = null,
-    val monthContainer: @Composable ((@Composable () -> Unit) -> Unit)? = null,
+    val headerContainer: @Composable (@Composable () -> Unit) -> Unit = { it() },
+    val monthContainer: @Composable (@Composable () -> Unit) -> Unit = { it() },
+    val weekContainer: @Composable (@Composable () -> Unit) -> Unit = { it() }
 )
