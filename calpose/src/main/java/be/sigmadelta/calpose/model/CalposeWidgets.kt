@@ -2,8 +2,9 @@ package be.sigmadelta.calpose.model
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
-import java.time.DayOfWeek
-import java.time.YearMonth
+import org.threeten.bp.DayOfWeek
+import org.threeten.bp.YearMonth
+
 
 /**
  * Describes the various widget types which can be rendered within Calpose

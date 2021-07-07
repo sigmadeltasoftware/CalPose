@@ -1,7 +1,8 @@
 package be.sigmadelta.calpose.model
 
-import java.time.DayOfWeek
-import java.time.YearMonth
+import org.threeten.bp.DayOfWeek
+import org.threeten.bp.YearMonth
+
 
 /**
  * Contains metadata information about a certain day

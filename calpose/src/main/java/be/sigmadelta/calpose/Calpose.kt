@@ -1,22 +1,23 @@
 package be.sigmadelta.calpose
 
-import android.icu.util.Calendar
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.gestures.DraggableState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import be.sigmadelta.calpose.model.CalposeActions
 import be.sigmadelta.calpose.model.CalposeDate
 import be.sigmadelta.calpose.model.CalposeProperties
 import be.sigmadelta.calpose.model.CalposeWidgets
+import org.threeten.bp.DayOfWeek
+import org.threeten.bp.YearMonth
 import java.text.SimpleDateFormat
-import java.time.DayOfWeek
-import java.time.YearMonth
+import java.util.*
 
 const val WEIGHT_7DAY_WEEK = 1 / 7f
 
@@ -82,7 +83,7 @@ fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, widgets: CalposeWidget
     val priorMonthLength = month.minusMonths(1).lengthOfMonth()
     val lastDayCount = (monthLength + firstDayOffset) % 7
     val weekCount = (firstDayOffset + monthLength) / 7
-    val today = SimpleDateFormat("dd").format(Calendar.getInstance().time).toInt()
+    val today = SimpleDateFormat("dd").format(Date(System.currentTimeMillis())).toInt()
 
     for (i in 0..weekCount) {
         CalposeWeek(

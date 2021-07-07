@@ -1,5 +1,6 @@
 package be.sigmadelta.calpose
 
+import android.annotation.SuppressLint
 import android.widget.ImageView
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -24,10 +25,11 @@ import be.sigmadelta.calpose.util.comicSans
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.time.DayOfWeek
-import java.time.Month
-import java.time.YearMonth
+import org.threeten.bp.DayOfWeek
+import org.threeten.bp.Month
+import org.threeten.bp.YearMonth
 
+@SuppressLint("NewApi")
 @ExperimentalCoroutinesApi
 @Preview("GeoCitiesPreview")
 @Composable
@@ -37,6 +39,7 @@ fun GeoCitiesPreview() {
     GeoCitiesCalendar(monthFlow)
 }
 
+@SuppressLint("NewApi")
 @ExperimentalCoroutinesApi
 @Composable
 fun GeoCitiesCalendar(
@@ -116,7 +119,9 @@ fun GeoCitiesCalendar(
                 },
                 headerDayRow = { headerDayList ->
                     Row(
-                        modifier = Modifier.fillMaxWidth(1f).padding(bottom = 16.dp),
+                        modifier = Modifier
+                            .fillMaxWidth(1f)
+                            .padding(bottom = 16.dp),
                     ) {
                         headerDayList.forEach {
                             val url = when (it) {
@@ -135,7 +140,10 @@ fun GeoCitiesCalendar(
                                     .load(url)
                                     .into(img)
                                 img
-                            }, Modifier.weight(WEIGHT_7DAY_WEEK).size(maxSize))
+                            },
+                                Modifier
+                                    .weight(WEIGHT_7DAY_WEEK)
+                                    .size(maxSize))
                         }
                     }
                 },
@@ -157,7 +165,10 @@ fun GeoCitiesCalendar(
                             .load(url)
                             .into(img)
                         img
-                    }, Modifier.weight(WEIGHT_7DAY_WEEK).size(maxSize))
+                    },
+                        Modifier
+                            .weight(WEIGHT_7DAY_WEEK)
+                            .size(maxSize))
                 },
 
                 priorMonthDay = {
@@ -168,7 +179,10 @@ fun GeoCitiesCalendar(
                             .load("https://web.archive.org/web/20070302160207/http://geocities.com/abatezero/images/stop.gif")
                             .into(img)
                         img
-                    }, Modifier.weight(WEIGHT_7DAY_WEEK).size(maxSize))
+                    },
+                        Modifier
+                            .weight(WEIGHT_7DAY_WEEK)
+                            .size(maxSize))
                 },
             )
         )
@@ -179,6 +193,9 @@ fun GeoCitiesCalendar(
                 .load("https://cdn.mainstreethost.com/wp-content/uploads/2019/06/3dText.gif")
                 .into(img)
             img
-        }, Modifier.fillMaxWidth().padding(top = 16.dp))
+        },
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp))
     }
 }
