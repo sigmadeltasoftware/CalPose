@@ -3,11 +3,10 @@ package be.sigmadelta.calpose.widgets
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -24,35 +23,28 @@ fun DefaultHeader(
     actions: CalposeActions,
     titleContainer: @Composable (@Composable () -> Unit) -> Unit = { it() }
 ) {
-    val isCurrentMonth = todayMonth == month
     Row {
-        IconButton(
-            onClick = { actions.onClickedPreviousMonth() },
-            modifier = Modifier.padding(start = 16.dp)
-        ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_left),
-                contentDescription = "Left"
-            )
-        }
+        DefaultIconButton(
+            modifier = Modifier.padding(start = 16.dp),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_left),
+            onClick = actions::onClickedPreviousMonth.get(),
+            contentDescription = "Left"
+        )
 
         Spacer(modifier = Modifier.weight(1f))
 
         titleContainer {
-            DefaultMonthTitle(month = month, isCurrentMonth = isCurrentMonth)
+            DefaultMonthTitle(month = month, isCurrentMonth = todayMonth == month)
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
-        IconButton(
-            onClick = { actions.onClickedNextMonth() },
-            modifier = Modifier.padding(end = 16.dp)
-        ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_right),
-                contentDescription = "Right"
-            )
-        }
+        DefaultIconButton(
+            modifier = Modifier.padding(end = 16.dp),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_right),
+            onClick = actions::onClickedNextMonth.get(),
+            contentDescription = "Right"
+        )
     }
 }
 
@@ -68,4 +60,24 @@ fun DefaultDay(
         textAlign = TextAlign.Center,
         style = style
     )
+}
+
+@Composable
+internal fun DefaultIconButton(
+    modifier: Modifier = Modifier,
+    imageVector: ImageVector,
+    onClick: () -> Unit,
+    contentDescription: String,
+    tint: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+) {
+    IconButton(
+        onClick = onClick,
+        modifier = modifier
+    ) {
+        Icon(
+            imageVector = imageVector,
+            contentDescription = contentDescription,
+            tint = tint
+        )
+    }
 }

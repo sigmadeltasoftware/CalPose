@@ -4,8 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,16 +30,13 @@ fun MaterialHeader(
         modifier = Modifier.background(color = backgroundColor),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(
-            onClick = { actions.onClickedPreviousMonth() },
-            modifier = Modifier.padding(start = 16.dp)
-        ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_left),
-                tint = Color.White,
-                contentDescription = "Left"
-            )
-        }
+        DefaultIconButton(
+            modifier = Modifier.padding(start = 16.dp),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_left),
+            onClick = actions::onClickedPreviousMonth.get(),
+            contentDescription = "Left",
+            tint = Color.White
+        )
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -55,15 +50,11 @@ fun MaterialHeader(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        IconButton(
-            onClick = { actions.onClickedNextMonth() },
-            modifier = Modifier.padding(end = 16.dp)
-        ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_right),
-                tint = Color.White,
-                contentDescription = "Right"
-            )
-        }
+        DefaultIconButton(
+            modifier = Modifier.padding(end = 16.dp),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_right),
+            onClick = actions::onClickedNextMonth.get(),
+            contentDescription = "Right"
+        )
     }
 }
