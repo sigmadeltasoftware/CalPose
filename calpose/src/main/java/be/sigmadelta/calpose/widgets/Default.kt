@@ -1,11 +1,13 @@
 package be.sigmadelta.calpose.widgets
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -14,26 +16,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import be.sigmadelta.calpose.R
 import be.sigmadelta.calpose.model.CalposeActions
+import be.sigmadelta.calpose.model.styles.CalposeHeaderStyle
 import org.threeten.bp.YearMonth
 
 @Composable
 fun DefaultHeader(
+    modifier: Modifier = Modifier,
     month: YearMonth,
     todayMonth: YearMonth,
     actions: CalposeActions,
-    titleContainer: @Composable (@Composable () -> Unit) -> Unit = { it() }
+    headerStyle: CalposeHeaderStyle = CalposeHeaderStyle()
 ) {
-    Row {
+    Row(modifier = modifier) {
         DefaultIconButton(
             modifier = Modifier.padding(start = 16.dp),
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_left),
             onClick = actions::onClickedPreviousMonth.get(),
-            contentDescription = "Left"
+            contentDescription = "Left",
+            tint = headerStyle.iconsTint
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
-        titleContainer {
+        headerStyle.titleStyle.container {
             DefaultMonthTitle(month = month, isCurrentMonth = todayMonth == month)
         }
 
@@ -43,8 +48,31 @@ fun DefaultHeader(
             modifier = Modifier.padding(end = 16.dp),
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_right),
             onClick = actions::onClickedNextMonth.get(),
-            contentDescription = "Right"
+            contentDescription = "Right",
+            tint = headerStyle.iconsTint
         )
+    }
+}
+
+@Composable
+fun DefaultMarkerContainer(
+    modifier: Modifier = Modifier,
+    markerColor: Color,
+    block: @Composable () -> Unit,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            modifier = Modifier
+                .size(28.dp)
+                .clip(CircleShape)
+                .background(markerColor)
+        ) {
+            block()
+        }
     }
 }
 
