@@ -21,7 +21,8 @@ import org.threeten.bp.YearMonth
 fun DefaultHeader(
     month: YearMonth,
     todayMonth: YearMonth,
-    actions: CalposeActions
+    actions: CalposeActions,
+    titleContainer: @Composable (@Composable () -> Unit) -> Unit = { it() }
 ) {
     val isCurrentMonth = todayMonth == month
     Row {
@@ -29,13 +30,17 @@ fun DefaultHeader(
             onClick = { actions.onClickedPreviousMonth() },
             modifier = Modifier.padding(start = 16.dp)
         ) {
-            Icon(imageVector = ImageVector.vectorResource(id = R.drawable.ic_left), contentDescription = "Left")
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_left),
+                contentDescription = "Left"
+            )
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
-
-        DefaultMonthTitle(month = month,isCurrentMonth = isCurrentMonth)
+        titleContainer {
+            DefaultMonthTitle(month = month, isCurrentMonth = isCurrentMonth)
+        }
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -43,7 +48,10 @@ fun DefaultHeader(
             onClick = { actions.onClickedNextMonth() },
             modifier = Modifier.padding(end = 16.dp)
         ) {
-            Icon(imageVector = ImageVector.vectorResource(id = R.drawable.ic_right), contentDescription = "Right")
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_right),
+                contentDescription = "Right"
+            )
         }
     }
 }
