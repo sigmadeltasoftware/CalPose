@@ -35,7 +35,5 @@ data class CalposeWidgets(
     val day: @Composable RowScope.(dayDate: CalposeDate, todayDate: CalposeDate) -> Unit,
     val priorMonthDay: @Composable RowScope.(dayDate: CalposeDate) -> Unit,
     val nextMonthDay: @Composable RowScope.(dayDate: CalposeDate) -> Unit = priorMonthDay,
-    val headerContainer: @Composable (@Composable () -> Unit) -> Unit = { it() },
-    val monthContainer: @Composable (@Composable () -> Unit) -> Unit = { it() },
-    val weekContainer: @Composable (@Composable () -> Unit) -> Unit = { it() }
+    val containers: CalposeContainers = CalposeContainers()
 )

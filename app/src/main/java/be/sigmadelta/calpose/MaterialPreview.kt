@@ -1,27 +1,28 @@
 package be.sigmadelta.calpose
 
-import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import be.sigmadelta.calpose.model.CalposeActions
+import be.sigmadelta.calpose.model.CalposeContainers
 import be.sigmadelta.calpose.model.CalposeDate
 import be.sigmadelta.calpose.model.CalposeWidgets
+import be.sigmadelta.calpose.model.styles.CalposeHeaderStyle
+import be.sigmadelta.calpose.model.styles.CalposeTitleStyle
 import be.sigmadelta.calpose.util.lightGrey
 import be.sigmadelta.calpose.util.primaryAccent
 import be.sigmadelta.calpose.widgets.DefaultDay
+import be.sigmadelta.calpose.widgets.DefaultMarkerContainer
 import be.sigmadelta.calpose.widgets.MaterialHeader
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
@@ -58,7 +59,12 @@ fun MaterialCalendar(
 
         widgets = CalposeWidgets(
             header = { month, todayMonth, actions ->
-                MaterialHeader(month, todayMonth, actions, Color(primaryAccent))
+                MaterialHeader(
+                    modifier = Modifier.background(Color(primaryAccent)),
+                    month = month,
+                    todayMonth = todayMonth,
+                    actions = actions
+                )
             },
             headerDayRow = { headerDayList -> HeaderDayRow(headerDayList = headerDayList) },
             day = { dayDate, todayDate ->
@@ -113,19 +119,23 @@ fun MaterialCalendarMotion(
         widgets = CalposeWidgets(
             header = { month, todayMonth, actions ->
                 MaterialHeader(
+                    modifier = Modifier.background(Color(primaryAccent)),
                     month = month,
                     todayMonth = todayMonth,
                     actions = actions,
-                    backgroundColor = Color(primaryAccent),
-                    titleContainer = {
-                        MaterialSharedAxis(
-                            targetState = month,
-                            axis = Axis.X,
-                            forward = forward
-                        ) { _ ->
-                            it()
-                        }
-                    }
+                    style = CalposeHeaderStyle(
+                        titleStyle = CalposeTitleStyle(
+                            container = {
+                                MaterialSharedAxis(
+                                    targetState = month,
+                                    axis = Axis.X,
+                                    forward = forward
+                                ) { _ ->
+                                    it()
+                                }
+                            }
+                        )
+                    )
                 )
             },
             headerDayRow = { headerDayList -> HeaderDayRow(headerDayList = headerDayList) },
@@ -137,15 +147,17 @@ fun MaterialCalendarMotion(
                 )
             },
             priorMonthDay = { dayDate -> PriorMonthDay(dayDate = dayDate) },
-            monthContainer = {
-                MaterialSharedAxis(
-                    targetState = month,
-                    axis = Axis.X,
-                    forward = forward
-                ) {
-                    Column { it() }
-                }
-            }
+            containers = CalposeContainers(
+                monthContainer = {
+                    MaterialSharedAxis(
+                        targetState = month,
+                        axis = Axis.X,
+                        forward = forward
+                    ) {
+                        Column { it() }
+                    }
+                },
+            )
         )
     )
 }
@@ -179,9 +191,15 @@ fun RowScope.Day(
 ) {
     val isSelected = selectionSet.contains(dayDate)
     val weight = if (isSelected) 1f else WEIGHT_7DAY_WEEK
-    val bgColor = if (isSelected) Color(primaryAccent) else Color.Transparent
+    val bgColor by
+    animateColorAsState(targetValue = if (isSelected) Color(primaryAccent) else Color.Transparent)
 
-    val widget: @Composable () -> Unit = {
+    DefaultMarkerContainer(
+        modifier = Modifier
+            .weight(WEIGHT_7DAY_WEEK)
+            .clickable { onSelected(dayDate) },
+        markerColor = bgColor
+    ) {
         DefaultDay(
             text = dayDate.day.toString(),
             modifier = Modifier
@@ -196,26 +214,6 @@ fun RowScope.Day(
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
             )
         )
-    }
-
-    Column(
-        modifier = Modifier.weight(WEIGHT_7DAY_WEEK),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Crossfade(targetState = bgColor) {
-            Box(
-                modifier = Modifier
-                    .size(28.dp)
-                    .clip(CircleShape)
-                    .clickable(onClick = { onSelected(dayDate) })
-                    .background(it)
-            ) {
-                widget()
-            }
-        }
-
     }
 }
 

@@ -1,28 +1,29 @@
 package be.sigmadelta.calpose
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import be.sigmadelta.calpose.model.CalposeActions
-import be.sigmadelta.calpose.model.CalposeWidgets
+import be.sigmadelta.calpose.model.*
+import be.sigmadelta.calpose.model.styles.CalposeDayStyle
+import be.sigmadelta.calpose.model.styles.CalposeStyle
 import be.sigmadelta.calpose.util.lightGrey
 import be.sigmadelta.calpose.util.primaryAccent
 import be.sigmadelta.calpose.widgets.DefaultDay
 import be.sigmadelta.calpose.widgets.DefaultHeader
+import be.sigmadelta.calpose.widgets.DefaultMarkerContainer
 import org.threeten.bp.YearMonth
 
-@SuppressLint("NewApi")
 @Preview("DefaultPreview")
 @Composable
 fun DefaultPreview() {
@@ -36,7 +37,6 @@ fun DefaultPreview() {
     )
 }
 
-@SuppressLint("NewApi")
 @Composable
 fun DefaultCalendar(
     month: YearMonth,
@@ -47,7 +47,11 @@ fun DefaultCalendar(
         actions = actions,
         widgets = CalposeWidgets(
             header = { month, todayMonth, actions ->
-                DefaultHeader(month, todayMonth, actions)
+                DefaultHeader(
+                    month = month,
+                    todayMonth = todayMonth,
+                    actions = actions
+                )
             },
             headerDayRow = { headerDayList ->
                 Row(
@@ -89,19 +93,11 @@ fun DefaultCalendar(
                 }
 
                 if (isToday) {
-                    Column(
+                    DefaultMarkerContainer(
                         modifier = Modifier.weight(WEIGHT_7DAY_WEEK),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        markerColor = Color(primaryAccent)
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .size(28.dp)
-                                .clip(CircleShape)
-                                .background(Color(primaryAccent))
-                        ) {
-                            widget()
-                        }
+                        widget()
                     }
                 } else widget()
             },
@@ -115,11 +111,101 @@ fun DefaultCalendar(
                         .weight(WEIGHT_7DAY_WEEK)
                 )
             },
-            headerContainer = { header ->
-                Card {
-                    header()
-                }
-            },
+            containers = CalposeContainers(
+                headerContainer = { header ->
+                    Card {
+                        header()
+                    }
+                },
+            )
         )
     )
+}
+
+@Preview("Widget-free")
+@Composable
+fun WidgetFree() {
+    var month by remember { mutableStateOf(YearMonth.now()) }
+    CalposeStatic(
+        month = month,
+        actions = CalposeActions(
+            onClickedPreviousMonth = { month = month.minusMonths(1) },
+            onClickedNextMonth = { month = month.plusMonths(1) }
+        ),
+        containers = CalposeContainers(
+            headerContainer = {
+                Card {
+                    it()
+                }
+            }
+        )
+    )
+}
+
+@Preview("Select month widget-free")
+@Composable
+fun SelectMonthWidgetFree() {
+    var month by remember { mutableStateOf(YearMonth.now()) }
+    var selected by remember { mutableStateOf<CalposeDate?>(null) }
+
+    Calpose(
+        style = CalposeStyle(
+            dayStyleProvider = CalposeDayStyleProvider(
+                day = { dayDate: CalposeDate, todayDate: CalposeDate ->
+                    val dayHasPassed = dayDate.day < todayDate.day
+                    val isCurrentMonth = dayDate.month == todayDate.month
+                    val isSelected = dayDate == selected
+
+                    CalposeDayStyle(
+                        textStyle = TextStyle(
+                            color = when {
+                                isCurrentMonth && dayHasPassed -> Color.Gray
+                                isSelected -> Color.White
+                                else -> Color.Black
+                            },
+                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                        ),
+                        container = {
+                            SelectableDayContainer(modifier = Modifier.clickable {
+                                selected = dayDate
+                            }) {
+                                if (isSelected) {
+                                    DefaultMarkerContainer(markerColor = Color(primaryAccent)) {
+                                        it()
+                                    }
+                                } else {
+                                    it()
+                                }
+                            }
+                        }
+                    )
+                }
+            )
+        ),
+        month = month,
+        actions = CalposeActions(
+            onClickedPreviousMonth = { month = month.minusMonths(1) },
+            onClickedNextMonth = { month = month.plusMonths(1) }
+        ),
+        containers = CalposeContainers(
+            headerContainer = {
+                Card {
+                    it()
+                }
+            }
+        ),
+    )
+}
+
+@Composable
+fun SelectableDayContainer(
+    modifier: Modifier,
+    composable: @Composable () -> Unit,
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
+        composable()
+    }
 }

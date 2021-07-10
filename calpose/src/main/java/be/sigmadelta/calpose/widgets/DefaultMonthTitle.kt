@@ -10,19 +10,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import be.sigmadelta.calpose.model.styles.CalposeTitleStyle
 import org.threeten.bp.YearMonth
-import org.threeten.bp.format.DateTimeFormatter
 
 @Composable
-internal fun DefaultMonthTitle(
+fun DefaultMonthTitle(
     month: YearMonth,
-    isCurrentMonth:Boolean = false,
-    textStyle: TextStyle = TextStyle()
-){
-    val title = remember(month){
-        val formatter = DateTimeFormatter.ofPattern("MMMM  yyyy")
-        month.format(formatter)
-    }
+    isCurrentMonth: Boolean = false,
+    calposeTitleStyle: CalposeTitleStyle = CalposeTitleStyle(),
+) {
+    val title = remember(month) { calposeTitleStyle.dateFormat(month) }
 
     Text(
         text = title,
@@ -30,7 +27,8 @@ internal fun DefaultMonthTitle(
         style = TextStyle(
             fontWeight = if (isCurrentMonth) FontWeight.Bold else FontWeight.SemiBold,
             fontSize = 22.sp,
-        ).merge(textStyle)
+        ).merge(calposeTitleStyle.style),
+        color = calposeTitleStyle.color
     )
 }
 
