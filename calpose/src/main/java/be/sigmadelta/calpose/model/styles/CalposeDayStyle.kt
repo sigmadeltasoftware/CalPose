@@ -13,8 +13,8 @@ data class CalposeDayStyle(
     val modifier: RowScope.() -> Modifier = { defaultDayModifier() },
     val textStyle: TextStyle,
     val textProvider: (CalposeDate) -> String = { it.day.toString() },
-    val container: @Composable (@Composable () -> Unit, CalposeDate) -> Unit =
-        { composable, _ -> composable() }
+    val container: @Composable (@Composable () -> Unit) -> Unit =
+        { composable -> composable() }
 )
 
 fun RowScope.defaultDayModifier() = Modifier

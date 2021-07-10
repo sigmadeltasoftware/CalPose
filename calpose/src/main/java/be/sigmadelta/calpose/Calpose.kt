@@ -6,7 +6,6 @@ import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -14,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import be.sigmadelta.calpose.model.*
+import be.sigmadelta.calpose.model.styles.CalposeDayStyle
 import be.sigmadelta.calpose.model.styles.CalposeStyle
 import be.sigmadelta.calpose.widgets.DefaultDay
 import be.sigmadelta.calpose.widgets.DefaultHeader
@@ -31,12 +31,6 @@ fun Calpose(
     month: YearMonth,
     actions: CalposeActions,
     containers: CalposeContainers = CalposeContainers(),
-    conditions: Set<CalposeCondition> = setOf(
-        PriorOrNextMonthDayCondition(),
-        TodayCondition(markerColor = MaterialTheme.colors.primary),
-        IsCurrentMonthAndDayHasPassedCondition(),
-        ElseCondition(),
-    ),
     style: CalposeStyle = CalposeStyle(),
     properties: CalposeProperties = CalposeProperties()
 ) {
@@ -49,7 +43,6 @@ fun Calpose(
             month = it,
             actions = actions,
             containers = containers,
-            conditions = conditions,
             style = style,
             properties = properties
         )
@@ -62,13 +55,6 @@ fun CalposeStatic(
     month: YearMonth,
     actions: CalposeActions,
     containers: CalposeContainers = CalposeContainers(),
-    conditions: Set<CalposeCondition> = setOf(
-        PriorOrNextMonthDayCondition(),
-        TodayCondition(markerColor = MaterialTheme.colors.primary),
-        IsCurrentMonthAndDayHasPassedCondition(),
-        ElseCondition(),
-
-        ),
     style: CalposeStyle = CalposeStyle(),
     properties: CalposeProperties = CalposeProperties()
 ) {
@@ -101,12 +87,26 @@ fun CalposeStatic(
             },
             day = { dayDate, todayDate ->
                 DayWeightContainer {
-                    conditionsCheck(conditions, this, dayDate, todayDate).invoke()
+                    ApplyDayStyle(
+                        selector = { style.dayStyleProvider.day(dayDate, todayDate) },
+                        dayDate = dayDate
+                    )
                 }
             },
             priorMonthDay = { dayDate ->
                 DayWeightContainer {
-                    conditionsCheck(conditions, this, dayDate, null).invoke()
+                    ApplyDayStyle(
+                        selector = { style.dayStyleProvider.priorMonthDay(dayDate) },
+                        dayDate = dayDate
+                    )
+                }
+            },
+            nextMonthDay = { dayDate ->
+                DayWeightContainer {
+                    ApplyDayStyle(
+                        selector = { style.dayStyleProvider.nextMonthDay(dayDate) },
+                        dayDate = dayDate
+                    )
                 }
             },
             containers = containers
@@ -131,34 +131,19 @@ internal fun RowScope.DayWeightContainer(
             content()
         }
     }
-
 }
 
-
-private fun conditionsCheck(
-    conditions: Set<CalposeCondition>,
-    rowScope: RowScope,
-    dayDate: CalposeDate,
-    todayDate: CalposeDate?
-): @Composable () -> Unit {
-    conditions.forEach {
-        if (it.block(dayDate, todayDate)) {
-            it.dayDate = dayDate
-            return {
-                it.style.container(
-                    {
-                        DefaultDay(
-                            text = it.style.textProvider(dayDate),
-                            modifier = it.style.modifier(rowScope),
-                            style = it.style.textStyle
-                        )
-                    },
-                    dayDate
-                )
-            }
+@Composable
+internal fun RowScope.ApplyDayStyle(selector: () -> CalposeDayStyle, dayDate: CalposeDate) {
+    selector().let {
+        it.container {
+            DefaultDay(
+                modifier = it.modifier(this),
+                text = it.textProvider(dayDate),
+                style = it.textStyle
+            )
         }
     }
-    return {}
 }
 
 @Composable

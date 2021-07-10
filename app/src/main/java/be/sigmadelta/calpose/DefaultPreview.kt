@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import be.sigmadelta.calpose.model.*
 import be.sigmadelta.calpose.model.styles.CalposeDayStyle
+import be.sigmadelta.calpose.model.styles.CalposeStyle
 import be.sigmadelta.calpose.util.lightGrey
 import be.sigmadelta.calpose.util.primaryAccent
 import be.sigmadelta.calpose.widgets.DefaultDay
@@ -148,6 +149,39 @@ fun SelectMonthWidgetFree() {
     var selected by remember { mutableStateOf<CalposeDate?>(null) }
 
     Calpose(
+        style = CalposeStyle(
+            dayStyleProvider = CalposeDayStyleProvider(
+                day = { dayDate: CalposeDate, todayDate: CalposeDate ->
+                    val dayHasPassed = dayDate.day < todayDate.day
+                    val isCurrentMonth = dayDate.month == todayDate.month
+                    val isSelected = dayDate == selected
+
+                    CalposeDayStyle(
+                        textStyle = TextStyle(
+                            color = when {
+                                isCurrentMonth && dayHasPassed -> Color.Gray
+                                isSelected -> Color.White
+                                else -> Color.Black
+                            },
+                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                        ),
+                        container = {
+                            SelectableDayContainer(modifier = Modifier.clickable {
+                                selected = dayDate
+                            }) {
+                                if (isSelected) {
+                                    DefaultMarkerContainer(markerColor = Color(primaryAccent)) {
+                                        it()
+                                    }
+                                } else {
+                                    it()
+                                }
+                            }
+                        }
+                    )
+                }
+            )
+        ),
         month = month,
         actions = CalposeActions(
             onClickedPreviousMonth = { month = month.minusMonths(1) },
@@ -160,35 +194,6 @@ fun SelectMonthWidgetFree() {
                 }
             }
         ),
-        conditions = setOf(
-            PriorOrNextMonthDayCondition(),
-            IsCurrentMonthAndDayHasPassedCondition(),
-            CalposeCondition(
-                block = { dayDate, _ -> dayDate == selected },
-                style = CalposeDayStyle(
-                    textStyle = TextStyle(color = Color.White),
-                    container = { composable, date ->
-                        DefaultMarkerContainer(
-                            modifier = Modifier.clickable { selected = null },
-                            markerColor = Color(
-                                primaryAccent
-                            ),
-                            block = composable
-                        )
-                    }
-                )
-            ), ElseCondition(
-                style = CalposeDayStyle(
-                    textStyle = TextStyle(color = Color.Black),
-                    container = { composable, date ->
-                        SelectableDayContainer(
-                            modifier = Modifier.clickable { selected = date },
-                            composable = composable
-                        )
-                    }
-                )
-            )
-        )
     )
 }
 
