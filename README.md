@@ -88,6 +88,7 @@ There is also an optional component of `properties` which contains some properti
 [CalposeProperties](https://github.com/sigmadeltasoftware/CalPose/blob/master/calpose/src/main/java/be/sigmadelta/calpose/model/CalposeProperties.kt "CalposeProperties.kt")
 
 ## Compose-version Changelog
+* V1.1.0: Compose 1.0.0-beta09
 * V1.0.5: Compose 1.0.0-beta09
 * V1.0.4: Compose 1.0.0-beta01
 * V1.0.3: Compose 1.0.0-alpha11
