@@ -131,14 +131,15 @@ fun CalposeWeek(
     widgets: CalposeWidgets
 ) {
     Row {
+        var dayOfWeekOrdinal = 1
         if (monthWeekNumber == 0) {
-            for (i in 0 until startDayOffSet) {
-                val priorDay = (priorMonthLength - (startDayOffSet - i - 1))
+            for (i in 1 .. startDayOffSet) {
+                val priorDay = (priorMonthLength - (startDayOffSet - i))
                 widgets.priorMonthDay(
                     this,
                     CalposeDate(
                         priorDay,
-                        month.minusMonths(1).atDay(priorDay).dayOfWeek,
+                        DayOfWeek.of(dayOfWeekOrdinal++),
                         month.minusMonths(1)
                     )
                 )
@@ -155,7 +156,7 @@ fun CalposeWeek(
             val day = if (monthWeekNumber == 0) i else (i + (7 * monthWeekNumber) - startDayOffSet)
             widgets.day(
                 this,
-                CalposeDate(day, DayOfWeek.of(i), month),
+                CalposeDate(day, DayOfWeek.of(dayOfWeekOrdinal++), month),
                 today
             )
         }
@@ -166,7 +167,7 @@ fun CalposeWeek(
                 widgets.nextMonthDay(
                     this, CalposeDate(
                         nextMonthDay,
-                        month.plusMonths(1).atDay(nextMonthDay).dayOfWeek,
+                        DayOfWeek.of(dayOfWeekOrdinal++),
                         month.plusMonths(1)
                     )
                 )
