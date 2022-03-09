@@ -28,7 +28,8 @@ fun Calpose(
     month: YearMonth,
     actions: CalposeActions,
     widgets: CalposeWidgets,
-    properties: CalposeProperties = CalposeProperties()
+    properties: CalposeProperties = CalposeProperties(),
+    firstDayOfWeek: DayOfWeek = DayOfWeek.SATURDAY
 ) {
     Crossfade(
         targetState = month,
@@ -38,7 +39,8 @@ fun Calpose(
             modifier = modifier,
             month = it,
             actions = actions,
-            widgets = widgets
+            widgets = widgets,
+            firstDayOfWeek = firstDayOfWeek
         )
     }
 
@@ -50,10 +52,11 @@ fun CalposeStatic(
     month: YearMonth,
     actions: CalposeActions,
     widgets: CalposeWidgets,
-    properties: CalposeProperties = CalposeProperties()
+    properties: CalposeProperties = CalposeProperties(),
+    firstDayOfWeek: DayOfWeek = DayOfWeek.MONDAY
 ) {
     val todayMonth = remember { YearMonth.now() }
-
+    val weekStartOffset = firstDayOfWeek.value - 1
     Column(
         modifier = modifier.draggable(
             orientation = Orientation.Horizontal,
@@ -66,8 +69,8 @@ fun CalposeStatic(
                 }
             })
     ) {
-        CalposeHeader(month, todayMonth, actions, widgets)
-        widgets.monthContainer { CalposeMonth(month, todayMonth, widgets) }
+        CalposeHeader(month, todayMonth, actions, widgets, weekStartOffset)
+        widgets.monthContainer { CalposeMonth(month, todayMonth, widgets, weekStartOffset) }
     }
 }
 
@@ -76,7 +79,8 @@ fun CalposeHeader(
     month: YearMonth,
     todayMonth: YearMonth,
     actions: CalposeActions,
-    widgets: CalposeWidgets
+    widgets: CalposeWidgets,
+    weekStartOffset: Int
 ) {
     widgets.headerContainer {
         Column(
@@ -84,15 +88,17 @@ fun CalposeHeader(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             widgets.header(month, todayMonth, actions)
-            widgets.headerDayRow(DayOfWeek.values().toSet())
+            widgets.headerDayRow((0..6).map { DayOfWeek.of((it + weekStartOffset) % 7 + 1)}.toSet())
         }
     }
 }
 
 @Composable
-fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, widgets: CalposeWidgets) {
-
-    val firstDayOffset = month.atDay(1).dayOfWeek.ordinal
+fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, widgets: CalposeWidgets, weekStartOffset: Int) {
+    var firstDayOffset = month.atDay(1).dayOfWeek.ordinal - weekStartOffset
+    if(firstDayOffset < 1)  firstDayOffset += 7
+    if(firstDayOffset > 7)  firstDayOffset -= 7
+    if(firstDayOffset == 7) firstDayOffset = 0
     val monthLength = month.lengthOfMonth()
     val priorMonthLength = month.minusMonths(1).lengthOfMonth()
     val lastDayCount = (monthLength + firstDayOffset) % 7
@@ -113,12 +119,12 @@ fun CalposeMonth(month: YearMonth, todayMonth: YearMonth, widgets: CalposeWidget
                     month = todayMonth
                 ),
                 month = month,
-                widgets = widgets
+                widgets = widgets,
+                weekStartOffset = weekStartOffset
             )
         }
     }
 }
-
 @Composable
 fun CalposeWeek(
     startDayOffSet: Int,
@@ -128,10 +134,11 @@ fun CalposeWeek(
     priorMonthLength: Int,
     today: CalposeDate,
     month: YearMonth,
-    widgets: CalposeWidgets
+    widgets: CalposeWidgets,
+    weekStartOffset: Int
 ) {
     Row {
-        var dayOfWeekOrdinal = 1
+        var dayOfWeekOrdinal = weekStartOffset + 1
         if (monthWeekNumber == 0) {
             for (i in 1 .. startDayOffSet) {
                 val priorDay = (priorMonthLength - (startDayOffSet - i))
@@ -139,7 +146,7 @@ fun CalposeWeek(
                     this,
                     CalposeDate(
                         priorDay,
-                        DayOfWeek.of(dayOfWeekOrdinal++),
+                        DayOfWeek.of(dayOfWeekOrdinal++ % 7 + 1),
                         month.minusMonths(1)
                     )
                 )
@@ -156,7 +163,7 @@ fun CalposeWeek(
             val day = if (monthWeekNumber == 0) i else (i + (7 * monthWeekNumber) - startDayOffSet)
             widgets.day(
                 this,
-                CalposeDate(day, DayOfWeek.of(dayOfWeekOrdinal++), month),
+                CalposeDate(day, DayOfWeek.of(dayOfWeekOrdinal++ % 7 + 1), month),
                 today
             )
         }
@@ -167,7 +174,7 @@ fun CalposeWeek(
                 widgets.nextMonthDay(
                     this, CalposeDate(
                         nextMonthDay,
-                        DayOfWeek.of(dayOfWeekOrdinal++),
+                        DayOfWeek.of(dayOfWeekOrdinal++ % 7 + 1),
                         month.plusMonths(1)
                     )
                 )
