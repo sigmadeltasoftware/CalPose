@@ -64,7 +64,8 @@ fun Calpose(
     month: YearMonth,
     actions: CalposeActions,
     widgets: CalposeWidgets,
-    properties: CalposeProperties = CalposeProperties()
+    properties: CalposeProperties = CalposeProperties(),
+    firstDayOfWeek: DayOfWeek = DayOfWeek.MONDAY
 )
 ```
 
@@ -86,6 +87,9 @@ to get a better idea of which widgets you can pass, and feel free to take a look
 #### Properties
 There is also an optional component of `properties` which contains some properties for really fine-tuning your experience: 
 [CalposeProperties](https://github.com/sigmadeltasoftware/CalPose/blob/master/calpose/src/main/java/be/sigmadelta/calpose/model/CalposeProperties.kt "CalposeProperties.kt")
+
+#### DayOfWeek
+In addition, the day of the week on which a week starts can be selected, so that, for example, weeks that start on Sunday can also be displayed.
 
 ## Compose-version Changelog
 * V1.1.0: Compose 1.0.0-beta09
