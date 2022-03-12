@@ -29,7 +29,7 @@ fun Calpose(
     actions: CalposeActions,
     widgets: CalposeWidgets,
     properties: CalposeProperties = CalposeProperties(),
-    firstDayOfWeek: DayOfWeek = DayOfWeek.SATURDAY
+    firstDayOfWeek: DayOfWeek = DayOfWeek.MONDAY
 ) {
     Crossfade(
         targetState = month,
