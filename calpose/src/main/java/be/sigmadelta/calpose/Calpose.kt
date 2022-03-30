@@ -29,7 +29,7 @@ fun Calpose(
     actions: CalposeActions,
     widgets: CalposeWidgets,
     properties: CalposeProperties = CalposeProperties(),
-    firstDayOfWeek: DayOfWeek = DayOfWeek.SATURDAY
+    firstDayOfWeek: DayOfWeek = DayOfWeek.MONDAY
 ) {
     Crossfade(
         targetState = month,
@@ -138,7 +138,7 @@ fun CalposeWeek(
     weekStartOffset: Int
 ) {
     Row {
-        var dayOfWeekOrdinal = weekStartOffset + 1
+        var dayOfWeekOrdinal = weekStartOffset
         if (monthWeekNumber == 0) {
             for (i in 1 .. startDayOffSet) {
                 val priorDay = (priorMonthLength - (startDayOffSet - i))
